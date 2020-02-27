@@ -25,6 +25,7 @@ export class DI {
 
 export abstract class DiagramElement {
   public extension?: Extension;
+  public id;
 
   public constructor(props?: DiagramElement) {
     this['@class'] = '.DiagramElement';
@@ -54,7 +55,7 @@ export abstract class Diagram {
   }
 }
 
-export abstract class Node {
+export abstract class Node extends DiagramElement {
   public constructor(props?: Node) {
     this['@class'] = '.Node';
 

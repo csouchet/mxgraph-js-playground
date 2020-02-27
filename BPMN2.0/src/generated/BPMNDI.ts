@@ -3,7 +3,7 @@ generated template classes for ./src/BPMNDI.xsd 2/26/2020, 11:42:11 AM
 ***********/
 
 import * as dc from './DC';
-import { Diagram, LabeledEdge, LabeledShape, Style } from './DI';
+import { Diagram, LabeledEdge, LabeledShape, Plane, Style } from './DI';
 
 export class BPMNDI {
   public bpmnDiagram: BPMNDiagram;
@@ -22,7 +22,9 @@ export class BPMNDI {
   }
 }
 
-export class BPMNPlane {
+export class BPMNPlane extends Plane {
+  public bpmnElement;
+
   public constructor(props?: BPMNPlane) {
     this['@class'] = '.BPMNPlane';
 
