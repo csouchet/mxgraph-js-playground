@@ -2,9 +2,9 @@ import { css, CSSResult, customElement, html, LitElement, property } from 'lit-e
 import { TemplateResult } from 'lit-html/lib/template-result';
 
 import getStyle from './style';
-import ModalGraph from '../../libs/bpmn-js/ModalGraph';
-import SubGraph from '../../libs/bpmn-js/SubGraph';
-import MainGraph from '../../libs/bpmn-js/MainGraph';
+import ModalGraph from '../../libs/graph/ModalGraph';
+import SubGraph from '../../libs/graph/SubGraph';
+import MainGraph from '../../libs/graph/MainGraph';
 
 @customElement('bpmn-visu')
 export class BpmnVisu extends LitElement {

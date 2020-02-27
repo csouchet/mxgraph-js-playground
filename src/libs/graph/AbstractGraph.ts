@@ -1,5 +1,8 @@
 import { mxgraph } from 'mxgraph';
 import { mxgraphFactory } from '../../components/mxgraph-factory';
+import { EdgeBpmnElementKind } from '../bpmn/edge/EdgeBpmnElementKind';
+import { ShapeBpmnElementKind } from '../bpmn/shape/ShapeBpmnElementKind';
+
 const { mxEvent, mxClient, mxUtils, mxConstants, mxGraph, mxEdgeStyle, mxGraphModel, mxPerimeter, mxPoint } = mxgraphFactory({
   mxLoadResources: false,
   mxLoadStylesheets: false,
@@ -18,25 +21,13 @@ export const TASK_HEIGHT = 75;
 export const TASK_Y_LARGE = EVENT_Y_LARGE - 22;
 export const TASK_Y_LITTLE = EVENT_Y_LITTLE - 22;
 
-const EVENT_END_TERMINATE = 'endTerminate';
-const EVENT_END = 'end';
-const EVENT_START = 'start';
-const EVENT_BOUNDARY = 'boundary';
-const GATEWAY = 'condition';
-const TASK = 'task';
-const TASK_CA = 'CallActivity';
-const POLL_LANE = 'poolLane';
-
-const TRANSITION_CROSSOVER = 'crossover';
-const TRANSITION_ANIMATED = 'animated';
-
 mxGraph.prototype.edgeLabelsMovable = false;
 mxGraph.prototype.cellsLocked = true;
 
 // Overrides method to provide a cell label in the display
 mxGraph.prototype.convertValueToString = function(cell) {
   if (mxUtils.isNode(cell.value)) {
-    if (cell.value.nodeName != undefined && cell.value.nodeName == TASK_CA) {
+    if (cell.value.nodeName != undefined && cell.value.nodeName == ShapeBpmnElementKind.TASK_CA) {
       return cell.getAttribute('name');
     }
   }
@@ -91,7 +82,7 @@ export default abstract class AbstractGraph {
 
       if (cell != null) {
         if (cell.vertex != null && cell.vertex == 1) {
-          if (cell.value.nodeName != undefined && cell.value.nodeName == TASK_CA) {
+          if (cell.value.nodeName != undefined && cell.value.nodeName == ShapeBpmnElementKind.TASK_CA) {
             const href = cell.getAttribute('href');
             if (isSet.call(this, href)) {
               window.open(href);
@@ -162,7 +153,7 @@ export default abstract class AbstractGraph {
     style[mxConstants.STYLE_FILLCOLOR] = '#d3d2d1';
 
     style[mxConstants.STYLE_STARTSIZE] = 30;
-    this.graph.getStylesheet().putCellStyle(POLL_LANE, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.POLL_LANE, style);
   }
 
   private configureTaskStyle() {
@@ -174,11 +165,11 @@ export default abstract class AbstractGraph {
 
     style[mxConstants.STYLE_ROUNDED] = true;
     style[mxConstants.STYLE_GRADIENTCOLOR] = '#B8B9DA';
-    this.graph.getStylesheet().putCellStyle(TASK, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.TASK, style);
   }
 
   private configureCallActivityStyle() {
-    const style = mxUtils.clone(this.graph.getStylesheet().getCellStyle(TASK));
+    const style = mxUtils.clone(this.graph.getStylesheet().getCellStyle(ShapeBpmnElementKind.TASK));
     style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
     style[mxConstants.STYLE_VERTICAL_ALIGN] = 'middle';
     style[mxConstants.STYLE_STROKECOLOR] = '#2C6DA3';
@@ -186,7 +177,7 @@ export default abstract class AbstractGraph {
 
     style[mxConstants.STYLE_ROUNDED] = true;
     style[mxConstants.STYLE_GRADIENTCOLOR] = 'Thistle';
-    this.graph.getStylesheet().putCellStyle(TASK_CA, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.TASK_CA, style);
   }
 
   private configureConditionStyle() {
@@ -200,7 +191,7 @@ export default abstract class AbstractGraph {
     style[mxConstants.STYLE_SPACING_TOP] = 55;
     style[mxConstants.STYLE_SPACING_RIGHT] = 110;
     style[mxConstants.STYLE_GRADIENTCOLOR] = '#E9ECB1';
-    this.graph.getStylesheet().putCellStyle(GATEWAY, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.GATEWAY, style);
   }
 
   private configureStartStyle() {
@@ -212,7 +203,7 @@ export default abstract class AbstractGraph {
     style[mxConstants.STYLE_STROKEWIDTH] = 1.7;
 
     style[mxConstants.STYLE_GRADIENTCOLOR] = '#E9ECB1';
-    this.graph.getStylesheet().putCellStyle(EVENT_START, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.EVENT_START, style);
   }
 
   private configureEndTerminateStyle() {
@@ -225,16 +216,16 @@ export default abstract class AbstractGraph {
 
     style[mxConstants.STYLE_SPACING_TOP] = 28;
     style[mxConstants.STYLE_FONTSTYLE] = 2;
-    this.graph.getStylesheet().putCellStyle(EVENT_END_TERMINATE, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.EVENT_END_TERMINATE, style);
   }
 
   private configureEndStyle() {
-    const style = mxUtils.clone(this.graph.getStylesheet().getCellStyle(EVENT_END_TERMINATE));
+    const style = mxUtils.clone(this.graph.getStylesheet().getCellStyle(ShapeBpmnElementKind.EVENT_END_TERMINATE));
     style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_ELLIPSE;
 
     style[mxConstants.STYLE_GRADIENTCOLOR] = 'Crimson';
     style[mxConstants.STYLE_SPACING_TOP] = 35;
-    this.graph.getStylesheet().putCellStyle(EVENT_END, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.EVENT_END, style);
   }
 
   private configureBoundaryEventStyle() {
@@ -246,7 +237,7 @@ export default abstract class AbstractGraph {
     style[mxConstants.STYLE_STROKEWIDTH] = 1.7;
 
     style[mxConstants.STYLE_RESIZABLE] = false;
-    this.graph.getStylesheet().putCellStyle(EVENT_BOUNDARY, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.EVENT_BOUNDARY, style);
   }
 
   private configureDefaultTransitionStyle() {
@@ -262,13 +253,13 @@ export default abstract class AbstractGraph {
     const style = mxUtils.clone(this.graph.getStylesheet().getDefaultEdgeStyle());
     style[mxConstants.STYLE_DASHED] = true;
     style[mxConstants.STYLE_ENDARROW] = mxConstants.ARROW_OPEN;
-    this.graph.getStylesheet().putCellStyle(TRANSITION_CROSSOVER, style);
+    this.graph.getStylesheet().putCellStyle(EdgeBpmnElementKind.TRANSITION_CROSSOVER, style);
   }
 
   private configureAnimatedTransitionStyle() {
     const style = mxUtils.clone(this.graph.getStylesheet().getDefaultEdgeStyle());
     style[mxConstants.STYLE_STROKEWIDTH] = 6;
-    this.graph.getStylesheet().putCellStyle(TRANSITION_ANIMATED, style);
+    this.graph.getStylesheet().putCellStyle(EdgeBpmnElementKind.TRANSITION_ANIMATED, style);
   }
 
   private autoResizeContainer() {
@@ -280,38 +271,38 @@ export default abstract class AbstractGraph {
   }
 
   protected createPool(name: string, y = 0, width: number = LANE_WIDTH): mxgraph.mxCell {
-    const pool = this.graph.insertVertex(this.graph.getDefaultParent(), null, name, 0, y, width, 0, POLL_LANE);
+    const pool = this.graph.insertVertex(this.graph.getDefaultParent(), null, name, 0, y, width, 0, ShapeBpmnElementKind.POLL_LANE);
     pool.setConnectable(false);
     return pool as mxgraph.mxCell;
   }
 
   protected createLane(pool: mxgraph.mxCell, name: string, y = 0, height: number = LANE_HEIGHT_LARGE, width: number = LANE_WIDTH): mxgraph.mxCell {
-    const lane = this.graph.insertVertex(pool, null, name, 0, y, width, height, POLL_LANE);
+    const lane = this.graph.insertVertex(pool, null, name, 0, y, width, height, ShapeBpmnElementKind.POLL_LANE);
     lane.setConnectable(false);
     return lane as mxgraph.mxCell;
   }
 
   protected createStartEvent(lane: mxgraph.mxCell, y: number = EVENT_Y_LARGE, x = 60): mxgraph.mxCell {
-    return this.graph.insertVertex(lane, null, null, x, y, EVENT_WIDTH, EVENT_WIDTH, EVENT_START) as mxgraph.mxCell;
+    return this.graph.insertVertex(lane, null, null, x, y, EVENT_WIDTH, EVENT_WIDTH, ShapeBpmnElementKind.EVENT_START) as mxgraph.mxCell;
   }
 
   protected createEndTerminateEvent(lane: mxgraph.mxCell, name: string, y: number = EVENT_Y_LARGE): mxgraph.mxCell {
-    return this.graph.insertVertex(lane, null, name, LANE_WIDTH - 100, y, EVENT_WIDTH, EVENT_WIDTH, EVENT_END_TERMINATE) as mxgraph.mxCell;
+    return this.graph.insertVertex(lane, null, name, LANE_WIDTH - 100, y, EVENT_WIDTH, EVENT_WIDTH, ShapeBpmnElementKind.EVENT_END_TERMINATE) as mxgraph.mxCell;
   }
 
   protected createEndEvent(lane: mxgraph.mxCell, y: number = EVENT_Y_LARGE, x: number = LANE_WIDTH - 100, name?: string): mxgraph.mxCell {
-    return this.graph.insertVertex(lane, null, name, x, y, EVENT_WIDTH, EVENT_WIDTH, EVENT_END) as mxgraph.mxCell;
+    return this.graph.insertVertex(lane, null, name, x, y, EVENT_WIDTH, EVENT_WIDTH, ShapeBpmnElementKind.EVENT_END) as mxgraph.mxCell;
   }
 
   protected createBoundaryEvent(task: mxgraph.mxCell, name: string, x: number, y: number): mxgraph.mxCell {
-    const boundaryEvent = this.graph.insertVertex(task, null, name, x, y, 30, 25, EVENT_BOUNDARY);
+    const boundaryEvent = this.graph.insertVertex(task, null, name, x, y, 30, 25, ShapeBpmnElementKind.EVENT_BOUNDARY);
     boundaryEvent.geometry.offset = new mxPoint(-15, -10);
     boundaryEvent.geometry.relative = true;
     return boundaryEvent as mxgraph.mxCell;
   }
 
   protected createTask(lane: mxgraph.mxCell, name: string, x: number, y: number = TASK_Y_LARGE): mxgraph.mxCell {
-    return this.graph.insertVertex(lane, null, name, x, y, TASK_WIDTH, TASK_HEIGHT, TASK) as mxgraph.mxCell;
+    return this.graph.insertVertex(lane, null, name, x, y, TASK_WIDTH, TASK_HEIGHT, ShapeBpmnElementKind.TASK) as mxgraph.mxCell;
   }
 
   protected createCallActivity(
@@ -326,17 +317,17 @@ export default abstract class AbstractGraph {
     // Note that these XML nodes will be enclosing the mxCell nodes for the model cells in the output
     const doc = mxUtils.createXmlDocument();
 
-    const callActivity = doc.createElement(TASK_CA);
+    const callActivity = doc.createElement(ShapeBpmnElementKind.TASK_CA);
     callActivity.setAttribute('name', name);
     callActivity.setAttribute('href', href);
     callActivity.setAttribute('modalId', modalId);
     callActivity.setAttribute('subProcessId', subProcessId);
 
-    return this.graph.insertVertex(lane, null, callActivity, x, y, TASK_WIDTH, TASK_HEIGHT, TASK_CA) as mxgraph.mxCell;
+    return this.graph.insertVertex(lane, null, callActivity, x, y, TASK_WIDTH, TASK_HEIGHT, ShapeBpmnElementKind.TASK_CA) as mxgraph.mxCell;
   }
 
   protected createCondition(lane: mxgraph.mxCell, name: string, x: number, y = TASK_Y_LARGE): mxgraph.mxCell {
-    return this.graph.insertVertex(lane, null, name, x, y, TASK_HEIGHT, TASK_HEIGHT, GATEWAY) as mxgraph.mxCell;
+    return this.graph.insertVertex(lane, null, name, x, y, TASK_HEIGHT, TASK_HEIGHT, ShapeBpmnElementKind.GATEWAY) as mxgraph.mxCell;
   }
 
   protected createDefaultTransition(source: mxgraph.mxCell, target: mxgraph.mxCell, name = null, style?: string): mxgraph.mxEdge {
@@ -350,7 +341,7 @@ export default abstract class AbstractGraph {
   }
 
   protected createCrossoverTransition(source: mxgraph.mxCell, target: mxgraph.mxCell): mxgraph.mxEdge {
-    return this.graph.insertEdge(this.graph.getDefaultParent(), null, null, source, target, TRANSITION_CROSSOVER);
+    return this.graph.insertEdge(this.graph.getDefaultParent(), null, null, source, target, EdgeBpmnElementKind.TRANSITION_CROSSOVER);
   }
 
   protected createCrossoverTransitionWithPoint(source: mxgraph.mxCell, target: mxgraph.mxCell): mxgraph.mxEdge {
@@ -360,7 +351,7 @@ export default abstract class AbstractGraph {
   }
 
   protected createAnimatedTransition(source: mxgraph.mxCell, target: mxgraph.mxCell) {
-    return this.graph.insertEdge(this.graph.getDefaultParent(), null, null, source, target, TRANSITION_ANIMATED);
+    return this.graph.insertEdge(this.graph.getDefaultParent(), null, null, source, target, EdgeBpmnElementKind.TRANSITION_ANIMATED);
   }
 
   protected addAnimation(edgesWithTransition: mxgraph.mxCell[]) {
