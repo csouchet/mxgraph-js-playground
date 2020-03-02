@@ -165,11 +165,11 @@ export default abstract class AbstractGraph {
 
     style[mxConstants.STYLE_ROUNDED] = true;
     style[mxConstants.STYLE_GRADIENTCOLOR] = '#B8B9DA';
-    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.TASK, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.TASK_SERVICE, style);
   }
 
   private configureCallActivityStyle() {
-    const style = mxUtils.clone(this.graph.getStylesheet().getCellStyle(ShapeBpmnElementKind.TASK));
+    const style = mxUtils.clone(this.graph.getStylesheet().getCellStyle(ShapeBpmnElementKind.TASK_SERVICE));
     style[mxConstants.STYLE_SHAPE] = mxConstants.SHAPE_RECTANGLE;
     style[mxConstants.STYLE_VERTICAL_ALIGN] = 'middle';
     style[mxConstants.STYLE_STROKECOLOR] = '#2C6DA3';
@@ -191,7 +191,7 @@ export default abstract class AbstractGraph {
     style[mxConstants.STYLE_SPACING_TOP] = 55;
     style[mxConstants.STYLE_SPACING_RIGHT] = 110;
     style[mxConstants.STYLE_GRADIENTCOLOR] = '#E9ECB1';
-    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.GATEWAY, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.GATEWAY_EXCLUSIVE, style);
   }
 
   private configureStartStyle() {
@@ -302,7 +302,7 @@ export default abstract class AbstractGraph {
   }
 
   protected createTask(lane: mxgraph.mxCell, name: string, x: number, y: number = TASK_Y_LARGE): mxgraph.mxCell {
-    return this.graph.insertVertex(lane, null, name, x, y, TASK_WIDTH, TASK_HEIGHT, ShapeBpmnElementKind.TASK) as mxgraph.mxCell;
+    return this.graph.insertVertex(lane, null, name, x, y, TASK_WIDTH, TASK_HEIGHT, ShapeBpmnElementKind.TASK_SERVICE) as mxgraph.mxCell;
   }
 
   protected createCallActivity(
@@ -327,7 +327,7 @@ export default abstract class AbstractGraph {
   }
 
   protected createCondition(lane: mxgraph.mxCell, name: string, x: number, y = TASK_Y_LARGE): mxgraph.mxCell {
-    return this.graph.insertVertex(lane, null, name, x, y, TASK_HEIGHT, TASK_HEIGHT, ShapeBpmnElementKind.GATEWAY) as mxgraph.mxCell;
+    return this.graph.insertVertex(lane, null, name, x, y, TASK_HEIGHT, TASK_HEIGHT, ShapeBpmnElementKind.GATEWAY_EXCLUSIVE) as mxgraph.mxCell;
   }
 
   protected createDefaultTransition(source: mxgraph.mxCell, target: mxgraph.mxCell, name = null, style?: string): mxgraph.mxEdge {
