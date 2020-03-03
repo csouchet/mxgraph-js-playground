@@ -20,11 +20,11 @@ export function findFont(id: string): Font {
 }
 
 export function findShapeBpmnElement(id: string): ShapeBpmnElement {
-  return convertedShapeBpmnElements.find(i => i.getId() === id);
+  return convertedShapeBpmnElements.find(i => i.id === id);
 }
 
 export function findEdgeBpmnElement(id: string): EdgeBpmnElement {
-  return convertedEdgeBpmnElements.find(i => i.getId() === id);
+  return convertedEdgeBpmnElements.find(i => i.id === id);
 }
 
 @JsonConverter
@@ -34,8 +34,6 @@ export class ShapeConverter implements JsonCustomConvert<Shape[]> {
   // BPMNLabelStyle: […] }
 
   deserialize(data: any): Shape[] {
-    console.log('ShapeConverter');
-
     try {
       const shapes = data.BPMNPlane.BPMNShape;
       if (shapes === undefined || shapes === null) {
@@ -59,8 +57,6 @@ export class EdgeConverter implements JsonCustomConvert<Edge[]> {
   // BPMNLabelStyle: […] }
 
   deserialize(data: any): Edge[] {
-    console.log('EdgeConverter');
-
     const edges = data.BPMNPlane.BPMNEdge;
     if (edges === undefined || edges === null || edges === '') {
       return undefined;
@@ -80,8 +76,6 @@ export class FontConverter implements JsonCustomConvert<Font[]> {
   // BPMNLabelStyle: [{ Font: { isBold: false, isItalic: false, isStrikeThrough: false, isUnderline: false, name: 'Ubuntu', size: 9 }, id: '_WrSenhszEeqkhYLXtt1BFw' }] }
 
   deserialize(data: any): Font[] {
-    console.log('FontConverter');
-
     const styles = data.BPMNLabelStyle;
     if (styles === undefined || styles === null || styles === '') {
       return undefined;
@@ -121,8 +115,6 @@ export class EdgeBpmnElementConverter implements JsonCustomConvert<EdgeBpmnEleme
   // 1: Object { id: "_RLlAI3H_Eei9Z4IY4QeFuA", name: "Notify Credit History Available", ioSpecification: {…}, … }
 
   deserialize(data: any): EdgeBpmnElement[] {
-    console.log('EdgeBpmnElementConverter');
-
     try {
       function parseProcess(process) {
         function buildEdgeBpmnElement(sequenceFlow) {
@@ -200,8 +192,6 @@ export class ShapeBpmnElementConverter implements JsonCustomConvert<ShapeBpmnEle
   // 1: Object { id: "_RLlAI3H_Eei9Z4IY4QeFuA", name: "Notify Credit History Available", ioSpecification: {…}, … }
 
   deserialize(data: any): ShapeBpmnElement[] {
-    console.log('ShapeBpmnElementConverter');
-
     function parseProcess(process) {
       function buildShapeBpmnElement(bpmnElements: Array<any> | any, kind: ShapeBpmnElementKind) {
         if (bpmnElements !== undefined && bpmnElements !== null) {

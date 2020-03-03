@@ -32,11 +32,12 @@ export class BoundsConverter implements JsonCustomConvert<Bounds> {
 
 @JsonObject('BPMNShape')
 export default class Shape {
+
   @JsonProperty('id', String)
   private _id: string;
 
   @JsonProperty('bpmnElement', ShapeBpmnElementConverter)
-  private bpmnElement: ShapeBpmnElement;
+  private _bpmnElement: ShapeBpmnElement;
 
   @JsonProperty('isHorizontal', Boolean, true)
   private isHorizontal: boolean;
@@ -51,7 +52,7 @@ export default class Shape {
   private isMessageVisible: boolean;
 
   @JsonProperty('Bounds', BoundsConverter)
-  private bounds: Bounds;
+  private _bounds: Bounds;
 
   @JsonProperty('BPMNLabel', LabelStyleConverter, true)
   private labelStyle?: LabelStyle;
@@ -67,16 +68,24 @@ export default class Shape {
     labelStyle?: LabelStyle,
   ) {
     this._id = id;
-    this.bpmnElement = bpmnElement;
+    this._bpmnElement = bpmnElement;
     this.isHorizontal = isHorizontal;
     this.isExpanded = isExpanded;
     this.isMarkerVisible = isMarkerVisible;
     this.isMessageVisible = isMessageVisible;
-    this.bounds = bounds;
+    this._bounds = bounds;
     this.labelStyle = labelStyle;
   }
 
-  getId(): string {
+  get id(): string {
     return this._id;
+  }
+
+  get bpmnElement(): ShapeBpmnElement {
+    return this._bpmnElement;
+  }
+
+  get bounds(): Bounds {
+    return this._bounds;
   }
 }

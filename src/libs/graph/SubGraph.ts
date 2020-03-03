@@ -1,4 +1,5 @@
-import AbstractGraph, { EVENT_Y_LITTLE, LANE_HEIGHT_LITTLE, TASK_Y_LITTLE } from './AbstractGraph';
+import AbstractGraph, { LANE_HEIGHT_LITTLE } from './AbstractGraph';
+import BPMNXMLParser from '../../components/BPMNXMLParser';
 
 export default class SubGraph extends AbstractGraph {
   constructor(container: Element) {
@@ -6,21 +7,34 @@ export default class SubGraph extends AbstractGraph {
   }
 
   public loadGraph(): void {
+    const { shapes, edges } = BPMNXMLParser.parse();
+
     const model = this.graph.getModel();
 
     model.beginUpdate();
     try {
       const pool = this.createPool('Sub Pool');
-      const lane = this.createLane(pool, 'Sub Lane', 0, LANE_HEIGHT_LITTLE);
+      const lane = this.createLane(pool, 'Sub Lane', 0);
 
-      const start = this.createStartEvent(lane, EVENT_Y_LITTLE, 100);
-      const task1 = this.createTask(lane, 'Task 1', 300, TASK_Y_LITTLE);
-      const task2 = this.createTask(lane, 'Task 2', 600, TASK_Y_LITTLE);
-      const end = this.createEndEvent(lane, EVENT_Y_LITTLE, 900);
+      shapes.forEach(shape => {
+        const bounds = shape.bounds;
+        const bpmnElement = shape.bpmnElement;
+        if (bpmnElement !== undefined && bpmnElement !== null) {
+          this.graph.insertVertex(lane, bpmnElement.id, bpmnElement.name, bounds.x, bounds.y, bounds.width, bounds.height, bpmnElement.kind);
+        }
+      });
 
-      this.createDefaultTransition(start, task1);
-      this.createDefaultTransition(task1, task2);
-      this.createDefaultTransition(task2, end);
+     /* edges.forEach(edge => {
+        const bpmnElement = edge.bpmnElement;
+        if (bpmnElement !== undefined && bpmnElement !== null) {
+          const source = bpmnElement.source;
+          const target = bpmnElement.target;
+
+          if (source !== undefined && source !== null && target !== undefined && target !== null) {
+            this.graph.insertEdge(this.graph.getDefaultParent(), null, bpmnElement.name, source.id, target.id);
+          }
+        }
+      });*/
     } finally {
       // Updates the display
       model.endUpdate();

@@ -47,7 +47,6 @@ export default class BPMNXMLParser {
       stopNodes: ['parse-me-as-string'],
     };
 
-    let definitions: Definitions;
     if (parser.validate(xmlData) === true) {
       //optional (it'll return an object in case it's not valid)
       const jsonObj = parser.parse(xmlData, options);
@@ -58,20 +57,17 @@ export default class BPMNXMLParser {
       delete jsonObj.definitions.import;
       delete jsonObj.definitions.schemaLocation;
       delete jsonObj.definitions.expressionLanguage;
-      console.log(jsonObj);
 
       // Choose your settings
       // Check the detailed reference in the chapter "JsonConvert class properties and methods"
       const jsonConvert: JsonConvert = new JsonConvert();
-      jsonConvert.operationMode = OperationMode.LOGGING;
+      jsonConvert.operationMode = OperationMode.ENABLE;
       jsonConvert.ignorePrimitiveChecks = false; // don't allow assigning number to string etc.
       jsonConvert.valueCheckingMode = ValueCheckingMode.DISALLOW_NULL; // never allow null
 
       try {
-        definitions = jsonConvert.deserializeObject(jsonObj.definitions, Definitions);
-      //  console.log(jsonConvert.deserializeArray(jsonObj.definitions.BPMNDiagram.BPMNPlane.BPMNEdge, Edge));
-        console.log(definitions.getShapes());
-        console.log(definitions.getEdges());
+        const definitions = jsonConvert.deserializeObject(jsonObj.definitions, Definitions);
+        return { shapes: definitions.getShapes(), edges: definitions.getEdges() };
       } catch (e) {
         console.log(<Error>e);
       }
@@ -80,7 +76,5 @@ export default class BPMNXMLParser {
     /*    // Intermediate obj
     const tObj = parser.getTraversalObj(xmlData, options);
     var jsonObj = parser.convertToJson(tObj, options);*/
-
-    return { shapes: definitions.getShapes(), edges: definitions.getEdges() };
   }
 }

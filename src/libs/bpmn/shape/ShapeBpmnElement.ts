@@ -2,16 +2,24 @@ import { ShapeBpmnElementKind } from './ShapeBpmnElementKind';
 
 export default class ShapeBpmnElement {
   private _id: string;
-  private name: string;
-  private kind: ShapeBpmnElementKind;
+  private _name: string;
+  private _kind: ShapeBpmnElementKind;
 
   constructor(id: string, name: string, kind: ShapeBpmnElementKind) {
     this._id = id;
-    this.name = name;
-    this.kind = kind;
+    this._name = name;
+    this._kind = kind;
   }
 
-  getId(): string {
+  get id(): string {
     return this._id;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get kind(): ShapeBpmnElementKind {
+    return this._kind;
   }
 }

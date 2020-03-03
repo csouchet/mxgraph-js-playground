@@ -33,11 +33,12 @@ export class EdgeBpmnElementConverter implements JsonCustomConvert<EdgeBpmnEleme
 
 @JsonObject('BPMNEdge')
 export default class Edge {
+
   @JsonProperty('id', String)
   private _id: string;
 
   @JsonProperty('bpmnElement', EdgeBpmnElementConverter)
-  private bpmnElement: EdgeBpmnElement;
+  private _bpmnElement: EdgeBpmnElement;
 
   @JsonProperty('waypoint', WaypointConverter)
   private waypoints: Waypoint[];
@@ -47,12 +48,16 @@ export default class Edge {
 
   constructor(id?: string, bpmnElement?: EdgeBpmnElement, waypoints?: Waypoint[], labelStyle?: LabelStyle) {
     this._id = id;
-    this.bpmnElement = bpmnElement;
+    this._bpmnElement = bpmnElement;
     this.waypoints = waypoints;
     this.labelStyle = labelStyle;
   }
 
   getId(): string {
     return this._id;
+  }
+
+  get bpmnElement(): EdgeBpmnElement {
+    return this._bpmnElement;
   }
 }

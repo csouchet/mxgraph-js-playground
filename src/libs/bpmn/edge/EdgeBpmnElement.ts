@@ -2,10 +2,11 @@ import { EdgeBpmnElementKind } from './EdgeBpmnElementKind';
 import ShapeBpmnElement from '../shape/ShapeBpmnElement';
 
 export default class EdgeBpmnElement {
+
   private _id: string;
-  private name?: string;
-  private source?: ShapeBpmnElement;
-  private target?: ShapeBpmnElement;
+  private _name?: string;
+  private _source?: ShapeBpmnElement;
+  private _target?: ShapeBpmnElement;
   private kind?: EdgeBpmnElementKind;
   // private conditionExpression?: ShapeBpmnElement;
 
@@ -17,13 +18,23 @@ export default class EdgeBpmnElement {
     kind?: EdgeBpmnElementKind, //  conditionExpression?: ShapeBpmnElement,
   ) {
     this._id = id;
-    this.name = name;
-    this.source = source;
-    this.target = target;
+    this._name = name;
+    this._source = source;
+    this._target = target;
     this.kind = kind;
   }
 
-  getId(): string {
+  get id(): string {
     return this._id;
+  }
+
+  get target(): ShapeBpmnElement {
+    return this._target;
+  }
+  get source(): ShapeBpmnElement {
+    return this._source;
+  }
+  get name(): string {
+    return this._name;
   }
 }

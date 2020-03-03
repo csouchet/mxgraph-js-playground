@@ -8,8 +8,6 @@ export default class MainGraph extends AbstractGraph {
   }
 
   public loadGraph(): void {
-    BPMNXMLParser.parse();
-
     const edgesWithTransition = this.updateModel();
     this.graph.fit();
     this.addAnimation(edgesWithTransition);
