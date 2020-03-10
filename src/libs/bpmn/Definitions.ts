@@ -193,12 +193,49 @@ export class ShapeBpmnElementConverter implements JsonCustomConvert<ShapeBpmnEle
 
   deserialize(data: any): ShapeBpmnElement[] {
     function parseProcess(process) {
+      function convertShape(bpmnElements: any, kind: ShapeBpmnElementKind) {
+        convertedShapeBpmnElements.push(new ShapeBpmnElement(bpmnElements.id, bpmnElements.name, kind));
+      }
+
+      function convertLane(lane: any, kind: ShapeBpmnElementKind) {
+        let name = lane.name;
+        if (!name) {
+          name = 'Lane';
+        }
+        const laneShapeBpmnElement = new ShapeBpmnElement(lane.id, name, kind);
+        convertedShapeBpmnElements.push(laneShapeBpmnElement);
+
+        const flowNodeRefs = lane.flowNodeRef;
+        if (flowNodeRefs !== undefined && flowNodeRefs !== null) {
+          if (Array.isArray(flowNodeRefs)) {
+            flowNodeRefs.map(flowNodeRef => {
+              const shapeBpmnElement = findShapeBpmnElement(flowNodeRef);
+              shapeBpmnElement.parent = laneShapeBpmnElement;
+            });
+          } else {
+            const shapeBpmnElement = findShapeBpmnElement(flowNodeRefs);
+            shapeBpmnElement.parent = laneShapeBpmnElement;
+          }
+        }
+      }
+
       function buildShapeBpmnElement(bpmnElements: Array<any> | any, kind: ShapeBpmnElementKind) {
         if (bpmnElements !== undefined && bpmnElements !== null) {
           if (Array.isArray(bpmnElements)) {
-            bpmnElements.map(bpmnElement => convertedShapeBpmnElements.push(new ShapeBpmnElement(bpmnElement.id, bpmnElement.name, kind)));
+            bpmnElements.map(bpmnElement => convertShape(bpmnElement, kind));
           } else {
-            convertedShapeBpmnElements.push(new ShapeBpmnElement(bpmnElements.id, bpmnElements.name, kind));
+            convertShape(bpmnElements, kind);
+          }
+        }
+      }
+
+      function buildLane(bpmnElements: Array<any> | any, kind: ShapeBpmnElementKind) {
+        if (bpmnElements !== undefined && bpmnElements !== null) {
+          const lanes = bpmnElements.lane;
+          if (Array.isArray(lanes)) {
+            lanes.map(lane => convertLane(lane, kind));
+          } else {
+            convertLane(lanes, kind);
           }
         }
       }
@@ -210,6 +247,7 @@ export class ShapeBpmnElementConverter implements JsonCustomConvert<ShapeBpmnEle
       buildShapeBpmnElement(process.serviceTask, ShapeBpmnElementKind.TASK_SERVICE);
       buildShapeBpmnElement(process.startEvent, ShapeBpmnElementKind.EVENT_START);
       buildShapeBpmnElement(process.userTask, ShapeBpmnElementKind.TASK_USER);
+      buildLane(process.laneSet, ShapeBpmnElementKind.LANE);
     }
 
     if (Array.isArray(data)) {
@@ -217,6 +255,7 @@ export class ShapeBpmnElementConverter implements JsonCustomConvert<ShapeBpmnEle
     } else {
       parseProcess(data);
     }
+    console.log(convertedShapeBpmnElements);
     return convertedShapeBpmnElements;
   }
 

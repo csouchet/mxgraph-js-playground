@@ -14,13 +14,17 @@ export default class SubGraph extends AbstractGraph {
     model.beginUpdate();
     try {
       const pool = this.createPool('Sub Pool');
-      const lane = this.createLane(pool, 'Sub Lane', 0);
 
       shapes.forEach(shape => {
         const bounds = shape.bounds;
         const bpmnElement = shape.bpmnElement;
         if (bpmnElement !== undefined && bpmnElement !== null) {
-          this.graph.insertVertex(lane, bpmnElement.id, bpmnElement.name, bounds.x, bounds.y, bounds.width, bounds.height, bpmnElement.kind);
+          const parent = bpmnElement.parent;
+          if (parent !== undefined && parent !== null) {
+            this.graph.insertVertex(model.getCell(parent.id), bpmnElement.id, bpmnElement.name, bounds.x, bounds.y, bounds.width, bounds.height, bpmnElement.kind);
+          } else {
+            this.graph.insertVertex(pool, bpmnElement.id, bpmnElement.name, bounds.x, bounds.y, bounds.width, bounds.height, bpmnElement.kind);
+          }
         }
       });
 
@@ -41,6 +45,6 @@ export default class SubGraph extends AbstractGraph {
     }
 
     //this.graph.fit();
-    document.getElementById('subGraphContainer').className = 'hidden';
+    //document.getElementById('subGraphContainer').className = 'hidden';
   }
 }

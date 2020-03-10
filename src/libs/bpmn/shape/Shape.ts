@@ -39,7 +39,7 @@ export default class Shape {
   @JsonProperty('bpmnElement', ShapeBpmnElementConverter)
   private _bpmnElement: ShapeBpmnElement;
 
-  @JsonProperty('isHorizontal', Boolean, true)
+ /* @JsonProperty('isHorizontal', Boolean, true)
   private isHorizontal: boolean;
 
   @JsonProperty('isExpanded', Boolean, true)
@@ -49,7 +49,7 @@ export default class Shape {
   private isMarkerVisible: boolean;
 
   @JsonProperty('isMessageVisible', Boolean, true)
-  private isMessageVisible: boolean;
+  private isMessageVisible: boolean;*/
 
   @JsonProperty('Bounds', BoundsConverter)
   private _bounds: Bounds;
@@ -69,10 +69,10 @@ export default class Shape {
   ) {
     this._id = id;
     this._bpmnElement = bpmnElement;
-    this.isHorizontal = isHorizontal;
+  /*  this.isHorizontal = isHorizontal;
     this.isExpanded = isExpanded;
     this.isMarkerVisible = isMarkerVisible;
-    this.isMessageVisible = isMessageVisible;
+    this.isMessageVisible = isMessageVisible;*/
     this._bounds = bounds;
     this.labelStyle = labelStyle;
   }

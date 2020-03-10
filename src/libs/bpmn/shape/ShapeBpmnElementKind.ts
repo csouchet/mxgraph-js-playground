@@ -1,5 +1,6 @@
 export enum ShapeBpmnElementKind {
-  POLL_LANE = 'poolLane',
+  LANE = 'LANE',
+  POOL = 'POOL',
 
   GATEWAY_EXCLUSIVE = 'condition',
 

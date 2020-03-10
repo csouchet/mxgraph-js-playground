@@ -153,7 +153,8 @@ export default abstract class AbstractGraph {
     style[mxConstants.STYLE_FILLCOLOR] = '#d3d2d1';
 
     style[mxConstants.STYLE_STARTSIZE] = 30;
-    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.POLL_LANE, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.LANE, style);
+    this.graph.getStylesheet().putCellStyle(ShapeBpmnElementKind.POOL, style);
   }
 
   private configureTaskStyle() {
@@ -271,13 +272,13 @@ export default abstract class AbstractGraph {
   }
 
   protected createPool(name: string, y = 0, width: number = LANE_WIDTH): mxgraph.mxCell {
-    const pool = this.graph.insertVertex(this.graph.getDefaultParent(), null, name, 0, y, width, 0, ShapeBpmnElementKind.POLL_LANE);
+    const pool = this.graph.insertVertex(this.graph.getDefaultParent(), null, name, 0, y, width, 0, ShapeBpmnElementKind.POOL);
     pool.setConnectable(false);
     return pool as mxgraph.mxCell;
   }
 
   protected createLane(pool: mxgraph.mxCell, name: string, y = 0, height: number = LANE_HEIGHT_LARGE, width: number = LANE_WIDTH): mxgraph.mxCell {
-    const lane = this.graph.insertVertex(pool, null, name, 0, y, width, height, ShapeBpmnElementKind.POLL_LANE);
+    const lane = this.graph.insertVertex(pool, null, name, 0, y, width, height, ShapeBpmnElementKind.LANE);
     lane.setConnectable(false);
     return lane as mxgraph.mxCell;
   }
