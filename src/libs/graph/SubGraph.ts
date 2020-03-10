@@ -24,23 +24,23 @@ export default class SubGraph extends AbstractGraph {
         }
       });
 
-     /* edges.forEach(edge => {
+      edges.forEach(edge => {
         const bpmnElement = edge.bpmnElement;
         if (bpmnElement !== undefined && bpmnElement !== null) {
           const source = bpmnElement.source;
           const target = bpmnElement.target;
 
           if (source !== undefined && source !== null && target !== undefined && target !== null) {
-            this.graph.insertEdge(this.graph.getDefaultParent(), null, bpmnElement.name, source.id, target.id);
+            this.graph.insertEdge(this.graph.getDefaultParent(), null, bpmnElement.name, model.getCell(source.id), model.getCell(target.id));
           }
         }
-      });*/
+      });
     } finally {
       // Updates the display
       model.endUpdate();
     }
 
-    this.graph.fit();
+    //this.graph.fit();
     document.getElementById('subGraphContainer').className = 'hidden';
   }
 }
