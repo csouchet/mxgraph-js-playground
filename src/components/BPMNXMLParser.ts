@@ -1,5 +1,5 @@
-//import * as BPMNFile from './BPMN.camunda.ts';
-import * as BPMNFile from './BPMN.Bonita.ts';
+import * as BPMNFile from './BPMN.camunda.ts';
+//import * as BPMNFile from './BPMN.Bonita.ts';
 import { JsonConvert, OperationMode, ValueCheckingMode } from 'json2typescript';
 import Edge from '../libs/bpmn/edge/Edge';
 import { Definitions } from '../libs/bpmn/Definitions';
@@ -67,7 +67,7 @@ export default class BPMNXMLParser {
 
       try {
         const definitions = jsonConvert.deserializeObject(jsonObj.definitions, Definitions);
-        return { shapes: definitions.getShapes(), edges: definitions.getEdges() };
+        return { shapes: definitions.shapes, edges: definitions.edges };
       } catch (e) {
         console.log(<Error>e);
       }

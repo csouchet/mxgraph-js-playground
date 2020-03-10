@@ -14,6 +14,7 @@ jsonConvert.valueCheckingMode = ValueCheckingMode.DISALLOW_NULL; // never allow 
 let convertedFonts: Font[] = [];
 const convertedEdgeBpmnElements: EdgeBpmnElement[] = [];
 const convertedShapeBpmnElements: ShapeBpmnElement[] = [];
+const convertedLaneBpmnElements: ShapeBpmnElement[] = [];
 
 export function findFont(id: string): Font {
   return convertedFonts.find(i => i.getId() === id);
@@ -21,6 +22,10 @@ export function findFont(id: string): Font {
 
 export function findShapeBpmnElement(id: string): ShapeBpmnElement {
   return convertedShapeBpmnElements.find(i => i.id === id);
+}
+
+export function findLaneBpmnElement(id: string): ShapeBpmnElement {
+  return convertedLaneBpmnElements.find(i => i.id === id);
 }
 
 export function findEdgeBpmnElement(id: string): EdgeBpmnElement {
@@ -57,11 +62,15 @@ export class EdgeConverter implements JsonCustomConvert<Edge[]> {
   // BPMNLabelStyle: […] }
 
   deserialize(data: any): Edge[] {
-    const edges = data.BPMNPlane.BPMNEdge;
-    if (edges === undefined || edges === null || edges === '') {
-      return undefined;
+    try {
+      const edges = data.BPMNPlane.BPMNEdge;
+      if (edges === undefined || edges === null || edges === '') {
+        return undefined;
+      }
+      return jsonConvert.deserializeArray(edges, Edge);
+    } catch (e) {
+      console.log(<Error>e);
     }
-    return jsonConvert.deserializeArray(edges, Edge);
   }
 
   serialize(data: Edge[]): any {
@@ -76,18 +85,22 @@ export class FontConverter implements JsonCustomConvert<Font[]> {
   // BPMNLabelStyle: [{ Font: { isBold: false, isItalic: false, isStrikeThrough: false, isUnderline: false, name: 'Ubuntu', size: 9 }, id: '_WrSenhszEeqkhYLXtt1BFw' }] }
 
   deserialize(data: any): Font[] {
-    const styles = data.BPMNLabelStyle;
-    if (styles === undefined || styles === null || styles === '') {
-      return undefined;
-    }
-
-    convertedFonts = styles.map(value => {
-      const font = value.Font;
-      if (font !== undefined && font !== null && font !== '') {
-        return new Font(value.id, font.name, font.size, font.isBold, font.isItalic, font.isUnderline, font.isStrikeThrough);
+    try {
+      const styles = data.BPMNLabelStyle;
+      if (styles === undefined || styles === null || styles === '') {
+        return undefined;
       }
-    });
-    return convertedFonts;
+
+      convertedFonts = styles.map(value => {
+        const font = value.Font;
+        if (font !== undefined && font !== null && font !== '') {
+          return new Font(value.id, font.name, font.size, font.isBold, font.isItalic, font.isUnderline, font.isStrikeThrough);
+        }
+      });
+      return convertedFonts;
+    } catch (e) {
+      console.log(<Error>e);
+    }
   }
 
   serialize(data: Font[]): any {
@@ -191,72 +204,117 @@ export class ShapeBpmnElementConverter implements JsonCustomConvert<ShapeBpmnEle
   // userTask: Array(6) [ {…}, {…}, {…}, … ]
   // 1: Object { id: "_RLlAI3H_Eei9Z4IY4QeFuA", name: "Notify Credit History Available", ioSpecification: {…}, … }
 
-  deserialize(data: any): ShapeBpmnElement[] {
-    function parseProcess(process) {
-      function convertShape(bpmnElements: any, kind: ShapeBpmnElementKind) {
-        convertedShapeBpmnElements.push(new ShapeBpmnElement(bpmnElements.id, bpmnElements.name, kind));
+  convertShape(bpmnElements: any, kind: ShapeBpmnElementKind, process: any) {
+    let processName = process.name;
+    if (!processName) {
+      processName = process.id;
+    }
+
+    convertedShapeBpmnElements.push(new ShapeBpmnElement(bpmnElements.id, bpmnElements.name, kind, processName));
+  }
+
+  buildShapeBpmnElement(bpmnElements: Array<any> | any, kind: ShapeBpmnElementKind, process: any) {
+    if (bpmnElements !== undefined && bpmnElements !== null) {
+      if (Array.isArray(bpmnElements)) {
+        bpmnElements.map(bpmnElement => this.convertShape(bpmnElement, kind, process));
+      } else {
+        this.convertShape(bpmnElements, kind, process);
       }
+    }
+  }
 
-      function convertLane(lane: any, kind: ShapeBpmnElementKind) {
-        let name = lane.name;
-        if (!name) {
-          name = 'Lane';
+  parseProcess(process) {
+    this.buildShapeBpmnElement(process.boundaryEvent, ShapeBpmnElementKind.EVENT_BOUNDARY, process);
+    this.buildShapeBpmnElement(process.endEvent, ShapeBpmnElementKind.EVENT_END, process);
+    this.buildShapeBpmnElement(process.exclusiveGateway, ShapeBpmnElementKind.GATEWAY_EXCLUSIVE, process);
+    this.buildShapeBpmnElement(process.intermediateCatchEvent, ShapeBpmnElementKind.EVENT_INTERMEDIATE_CATCH, process);
+    this.buildShapeBpmnElement(process.serviceTask, ShapeBpmnElementKind.TASK_SERVICE, process);
+    this.buildShapeBpmnElement(process.startEvent, ShapeBpmnElementKind.EVENT_START, process);
+    this.buildShapeBpmnElement(process.userTask, ShapeBpmnElementKind.TASK_USER, process);
+    this.buildShapeBpmnElement(process.task, ShapeBpmnElementKind.TASK, process);
+  }
+
+  deserialize(data: any): ShapeBpmnElement[] {
+    try {
+      if (data !== undefined && data !== null) {
+        if (Array.isArray(data)) {
+          data.map(process => this.parseProcess(process));
+        } else {
+          this.parseProcess(data);
         }
-        const laneShapeBpmnElement = new ShapeBpmnElement(lane.id, name, kind);
-        convertedShapeBpmnElements.push(laneShapeBpmnElement);
+        console.log(convertedShapeBpmnElements);
+        return convertedLaneBpmnElements.concat(convertedShapeBpmnElements);
+      }
+    } catch (e) {
+      console.log(<Error>e);
+    }
+  }
 
-        const flowNodeRefs = lane.flowNodeRef;
-        if (flowNodeRefs !== undefined && flowNodeRefs !== null) {
-          if (Array.isArray(flowNodeRefs)) {
-            flowNodeRefs.map(flowNodeRef => {
-              const shapeBpmnElement = findShapeBpmnElement(flowNodeRef);
-              shapeBpmnElement.parent = laneShapeBpmnElement;
-            });
-          } else {
-            const shapeBpmnElement = findShapeBpmnElement(flowNodeRefs);
+  serialize(data: ShapeBpmnElement[]): any {
+    console.log('Not implemented !!');
+  }
+}
+
+@JsonConverter
+export class LaneBpmnElementConverter implements JsonCustomConvert<ShapeBpmnElement[]> {
+  convertLane(lane: any, kind: ShapeBpmnElementKind, process: any) {
+    let name = lane.name;
+    if (!name) {
+      name = 'Lane';
+    }
+
+    let processName = process.name;
+    if (!processName) {
+      processName = process.id;
+    }
+
+    const laneShapeBpmnElement = new ShapeBpmnElement(lane.id, name, kind, processName);
+    convertedLaneBpmnElements.push(laneShapeBpmnElement);
+
+    const flowNodeRefs = lane.flowNodeRef;
+    if (flowNodeRefs !== undefined && flowNodeRefs !== null) {
+      if (Array.isArray(flowNodeRefs)) {
+        flowNodeRefs.map(flowNodeRef => {
+          const shapeBpmnElement = findShapeBpmnElement(flowNodeRef);
+          if (shapeBpmnElement) {
             shapeBpmnElement.parent = laneShapeBpmnElement;
           }
+        });
+      } else {
+        const shapeBpmnElement = findShapeBpmnElement(flowNodeRefs);
+        if (shapeBpmnElement) {
+          shapeBpmnElement.parent = laneShapeBpmnElement;
         }
       }
-
-      function buildShapeBpmnElement(bpmnElements: Array<any> | any, kind: ShapeBpmnElementKind) {
-        if (bpmnElements !== undefined && bpmnElements !== null) {
-          if (Array.isArray(bpmnElements)) {
-            bpmnElements.map(bpmnElement => convertShape(bpmnElement, kind));
-          } else {
-            convertShape(bpmnElements, kind);
-          }
-        }
-      }
-
-      function buildLane(bpmnElements: Array<any> | any, kind: ShapeBpmnElementKind) {
-        if (bpmnElements !== undefined && bpmnElements !== null) {
-          const lanes = bpmnElements.lane;
-          if (Array.isArray(lanes)) {
-            lanes.map(lane => convertLane(lane, kind));
-          } else {
-            convertLane(lanes, kind);
-          }
-        }
-      }
-
-      buildShapeBpmnElement(process.boundaryEvent, ShapeBpmnElementKind.EVENT_BOUNDARY);
-      buildShapeBpmnElement(process.endEvent, ShapeBpmnElementKind.EVENT_END);
-      buildShapeBpmnElement(process.exclusiveGateway, ShapeBpmnElementKind.GATEWAY_EXCLUSIVE);
-      buildShapeBpmnElement(process.intermediateCatchEvent, ShapeBpmnElementKind.EVENT_INTERMEDIATE_CATCH);
-      buildShapeBpmnElement(process.serviceTask, ShapeBpmnElementKind.TASK_SERVICE);
-      buildShapeBpmnElement(process.startEvent, ShapeBpmnElementKind.EVENT_START);
-      buildShapeBpmnElement(process.userTask, ShapeBpmnElementKind.TASK_USER);
-      buildLane(process.laneSet, ShapeBpmnElementKind.LANE);
     }
+  }
 
-    if (Array.isArray(data)) {
-      data.map(process => parseProcess(process));
-    } else {
-      parseProcess(data);
+  parseProcess(process) {
+    const laneSet = process.laneSet;
+    if (laneSet !== undefined && laneSet !== null) {
+      const lanes = laneSet.lane;
+      if (Array.isArray(lanes)) {
+        lanes.map(lane => this.convertLane(lane, ShapeBpmnElementKind.LANE, process));
+      } else {
+        this.convertLane(lanes, ShapeBpmnElementKind.LANE, process);
+      }
     }
-    console.log(convertedShapeBpmnElements);
-    return convertedShapeBpmnElements;
+  }
+
+  deserialize(data: any): ShapeBpmnElement[] {
+    try {
+      if (data !== undefined && data !== null) {
+        if (Array.isArray(data)) {
+          data.map(process => this.parseProcess(process));
+        } else {
+          this.parseProcess(data);
+        }
+        console.log(convertedShapeBpmnElements);
+        return convertedLaneBpmnElements.concat(convertedShapeBpmnElements);
+      }
+    } catch (e) {
+      console.log(<Error>e);
+    }
   }
 
   serialize(data: ShapeBpmnElement[]): any {
@@ -266,34 +324,49 @@ export class ShapeBpmnElementConverter implements JsonCustomConvert<ShapeBpmnEle
 
 @JsonObject('definitions')
 export class Definitions {
+  get shapes(): Shape[] {
+    return this._shapes;
+  }
+  get edges(): Edge[] {
+    return this._edges;
+  }
+
   @JsonProperty('BPMNDiagram', FontConverter)
   private fonts?: Font[];
 
   @JsonProperty('process', ShapeBpmnElementConverter)
   private shapeBpmnElements: ShapeBpmnElement[];
 
+  @JsonProperty('process', LaneBpmnElementConverter)
+  private laneBpmnElements: ShapeBpmnElement[];
+
   @JsonProperty('process', EdgeBpmnElementConverter)
   private edgeBpmnElements: EdgeBpmnElement[];
 
   @JsonProperty('BPMNDiagram', EdgeConverter)
-  private edges: Edge[];
+  private _edges: Edge[];
 
   @JsonProperty('BPMNDiagram', ShapeConverter)
-  private shapes: Shape[];
+  private _shapes: Shape[];
 
-  constructor(fonts?: Font[], shapeBpmnElements?: ShapeBpmnElement[], edgeBpmnElements?: EdgeBpmnElement[], shapes?: Shape[], edges?: Edge[]) {
+  /*  @JsonProperty('BPMNDiagram', LaneConverter)
+  private _lanes: Shape[];*/
+
+  constructor(
+    fonts?: Font[],
+    shapeBpmnElements?: ShapeBpmnElement[],
+    laneBpmnElements?: ShapeBpmnElement[],
+    edgeBpmnElements?: EdgeBpmnElement[],
+    shapes?: Shape[],
+    lanes?: Shape[],
+    edges?: Edge[],
+  ) {
     this.fonts = fonts;
     this.shapeBpmnElements = shapeBpmnElements;
+    this.laneBpmnElements = laneBpmnElements;
     this.edgeBpmnElements = edgeBpmnElements;
-    this.edges = edges;
-    this.shapes = shapes;
-  }
-
-  public getEdges(): Edge[] {
-    return this.edges;
-  }
-
-  public getShapes(): Shape[] {
-    return this.shapes;
+    this._edges = edges;
+    this._shapes = shapes;
+    // this._lanes = lanes;
   }
 }

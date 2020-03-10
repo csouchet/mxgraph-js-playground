@@ -43,7 +43,7 @@ export default class Edge {
   @JsonProperty('waypoint', WaypointConverter)
   private waypoints: Waypoint[];
 
-  @JsonProperty('BPMNLabel', LabelStyleConverter)
+  @JsonProperty('BPMNLabel', LabelStyleConverter, true)
   private labelStyle?: LabelStyle;
 
   constructor(id?: string, bpmnElement?: EdgeBpmnElement, waypoints?: Waypoint[], labelStyle?: LabelStyle) {

@@ -1,4 +1,5 @@
 export enum ShapeBpmnElementKind {
+  TASK = 'TASK',
   LANE = 'LANE',
   POOL = 'POOL',
 

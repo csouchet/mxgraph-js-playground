@@ -27,24 +27,28 @@ export class LabelStyleConverter implements JsonCustomConvert<LabelStyle> {
   "        </di:BPMNLabel>\n" */
 
   deserialize(data: any): LabelStyle {
-    const label = data;
-    if (label === undefined || label === null || label === '') {
-      return undefined;
-    }
+    try {
+      const label = data;
+      if (label === undefined || label === null || label === '') {
+        return undefined;
+      }
 
-    const style = data.labelStyle;
-    let font;
-    if (style !== undefined && style !== null && style !== '') {
-      font = findFont(style);
-    }
+      const style = data.labelStyle;
+      let font;
+      if (style !== undefined && style !== null && style !== '') {
+        font = findFont(style);
+      }
 
-    const bpmnBounds = data.Bounds;
-    let bounds;
-    if (bpmnBounds !== undefined && bpmnBounds !== null) {
-      bounds = new Bounds(bpmnBounds.x, bpmnBounds.y, bpmnBounds.width, bpmnBounds.height);
-    }
+      const bpmnBounds = data.Bounds;
+      let bounds;
+      if (bpmnBounds !== undefined && bpmnBounds !== null) {
+        bounds = new Bounds(bpmnBounds.x, bpmnBounds.y, bpmnBounds.width, bpmnBounds.height);
+      }
 
-    return new LabelStyle(data.id, font, bounds);
+      return new LabelStyle(data.id, font, bounds);
+    } catch (e) {
+      console.log(<Error>e);
+    }
   }
 
   serialize(data: LabelStyle): any {

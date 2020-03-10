@@ -2,13 +2,13 @@ import ShapeBpmnElement from './ShapeBpmnElement';
 import Bounds from '../Bounds';
 import LabelStyle, { LabelStyleConverter } from '../LabelStyle';
 import { JsonConverter, JsonCustomConvert, JsonObject, JsonProperty } from 'json2typescript';
-import { findShapeBpmnElement } from '../Definitions';
+import { findLaneBpmnElement, findShapeBpmnElement } from '../Definitions';
 
 @JsonConverter
 export class ShapeBpmnElementConverter implements JsonCustomConvert<ShapeBpmnElement> {
   deserialize(data: any): ShapeBpmnElement {
     if (data !== undefined && data !== null && data !== '') {
-      return findShapeBpmnElement(data);
+      return findShapeBpmnElement(data) || findLaneBpmnElement(data);
     }
   }
 

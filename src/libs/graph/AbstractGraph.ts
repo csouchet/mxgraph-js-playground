@@ -268,7 +268,7 @@ export default abstract class AbstractGraph {
     this.graph.border = 40;
     this.graph.getView().translate = new mxPoint(this.graph.border / 2, this.graph.border / 2);
     this.graph.setResizeContainer(true);
-    this.graph.graphHandler.setRemoveCellsFromParent(false);
+   // this.graph.graphHandler.setRemoveCellsFromParent(false);
   }
 
   protected createPool(name: string, y = 0, width: number = LANE_WIDTH): mxgraph.mxCell {
