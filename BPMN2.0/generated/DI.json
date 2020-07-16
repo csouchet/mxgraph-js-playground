@@ -1,7 +1,7 @@
 {
   "$id": "DI.json",
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "This JSON Schema file was generated from DI.xsd on Thu Jul 16 2020 11:11:39 GMT+0200 (Central European Summer Time).  For more information please see http://www.xsd2jsonschema.org",
+  "title": "This JSON Schema file was generated from DI.xsd on Thu Jul 16 2020 11:45:11 GMT+0200 (Central European Summer Time).  For more information please see http://www.xsd2jsonschema.org",
   "description": "Schema tag attributes: xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:dc='http://www.omg.org/spec/DD/20100524/DC' xmlns:di='http://www.omg.org/spec/DD/20100524/DI' targetNamespace='http://www.omg.org/spec/DD/20100524/DI' elementFormDefault='qualified' attributeFormDefault='unqualified'",
   "properties": {
     "DiagramElement": {

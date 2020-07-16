@@ -5,10 +5,10 @@
   "author": "",
   "license": "",
   "devDependencies": {
-    "ts-loader": "6.2.1",
-    "ts-node": "8.6.2",
-    "typescript": "3.8.2",
-    "xsd2ts": "0.3.5",
+    "ts-loader": "8.0.1",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.6",
+    "xsd2ts": "0.3.6",
     "xsd2jsonschema": "^0.3.7"
   },
   "main": "index.js",
@@ -16,10 +16,13 @@
   "scripts": {
     "ts-gen": "ts-node ./src/generate.ts",
     "makelib": "tsc -p ./src/generated",
-    "xsd2jsonschema": "ts-node ./src/convert.ts "
+    "xsd2jsonschema": "ts-node ./src/convert.ts ",
+    "xsd4js": "ts-node ./src/xsd4js_generate.ts "
   },
   "type": "es6",
   "dependencies": {
-    "urijs": "^1.19.2"
+    "urijs": "^1.19.2",
+    "xml2js": "^0.4.23",
+    "xsd4js": "^1.0.2"
   }
 }
