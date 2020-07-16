@@ -1,0 +1,169 @@
+{
+  "$id": "BPMN20.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "This JSON Schema file was generated from BPMN20.xsd on Thu Jul 16 2020 11:11:39 GMT+0200 (Central European Summer Time).  For more information please see http://www.xsd2jsonschema.org",
+  "description": "Schema tag attributes: elementFormDefault='qualified' attributeFormDefault='unqualified' xmlns='http://www.omg.org/spec/BPMN/20100524/MODEL' xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:bpmndi='http://www.omg.org/spec/BPMN/20100524/DI' targetNamespace='http://www.omg.org/spec/BPMN/20100524/MODEL'",
+  "properties": {
+    "definitions": {
+      "$ref": "#/definitions/tDefinitions"
+    },
+    "tDefinitions": {
+      "$ref": "#/definitions/tDefinitions"
+    },
+    "import": {
+      "$ref": "#/definitions/tImport"
+    },
+    "tImport": {
+      "$ref": "#/definitions/tImport"
+    }
+  },
+  "type": "object",
+  "anyOf": [
+    {
+      "required": [
+        "definitions"
+      ]
+    },
+    {
+      "required": [
+        "tDefinitions"
+      ]
+    },
+    {
+      "required": [
+        "import"
+      ]
+    },
+    {
+      "required": [
+        "tImport"
+      ]
+    }
+  ],
+  "definitions": {
+    "definitions": {
+      "$ref": "#/definitions/tDefinitions"
+    },
+    "tDefinitions": {
+      "required": [
+        "@targetNamespace"
+      ],
+      "properties": {
+        "import": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/tImport"
+            },
+            {
+              "items": {
+                "$ref": "#/definitions/tImport"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "extension": {
+          "oneOf": [
+            {
+              "$ref": "FORWARD_REFERENCE#/to/http://www.omg.org/spec/BPMN/20100524/MODEL/extension"
+            },
+            {
+              "items": {
+                "$ref": "FORWARD_REFERENCE#/to/http://www.omg.org/spec/BPMN/20100524/MODEL/extension"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "rootElement": {
+          "oneOf": [
+            {
+              "$ref": "FORWARD_REFERENCE#/to/http://www.omg.org/spec/BPMN/20100524/MODEL/rootElement"
+            },
+            {
+              "items": {
+                "$ref": "FORWARD_REFERENCE#/to/http://www.omg.org/spec/BPMN/20100524/MODEL/rootElement"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "bpmndi:BPMNDiagram": {
+          "oneOf": [
+            {
+              "$ref": "FORWARD_REFERENCE#/to/http://www.omg.org/spec/BPMN/20100524/DI/bpmndi:BPMNDiagram"
+            },
+            {
+              "items": {
+                "$ref": "FORWARD_REFERENCE#/to/http://www.omg.org/spec/BPMN/20100524/DI/bpmndi:BPMNDiagram"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "relationship": {
+          "oneOf": [
+            {
+              "$ref": "FORWARD_REFERENCE#/to/http://www.omg.org/spec/BPMN/20100524/MODEL/relationship"
+            },
+            {
+              "items": {
+                "$ref": "FORWARD_REFERENCE#/to/http://www.omg.org/spec/BPMN/20100524/MODEL/relationship"
+              },
+              "type": "array"
+            }
+          ]
+        },
+        "@id": {
+          "type": "string"
+        },
+        "@name": {
+          "type": "string"
+        },
+        "@targetNamespace": {
+          "format": "uri",
+          "type": "string"
+        },
+        "@expressionLanguage": {
+          "format": "uri",
+          "type": "string"
+        },
+        "@typeLanguage": {
+          "format": "uri",
+          "type": "string"
+        },
+        "@exporter": {
+          "type": "string"
+        },
+        "@exporterVersion": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "import": {
+      "$ref": "#/definitions/tImport"
+    },
+    "tImport": {
+      "required": [
+        "@namespace",
+        "@location",
+        "@importType"
+      ],
+      "properties": {
+        "@namespace": {
+          "format": "uri",
+          "type": "string"
+        },
+        "@location": {
+          "type": "string"
+        },
+        "@importType": {
+          "format": "uri",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

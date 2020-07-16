@@ -8,13 +8,18 @@
     "ts-loader": "6.2.1",
     "ts-node": "8.6.2",
     "typescript": "3.8.2",
-    "xsd2ts": "0.3.5"
+    "xsd2ts": "0.3.5",
+    "xsd2jsonschema": "^0.3.7"
   },
   "main": "index.js",
   "bin": "../src/libs/bpmn20",
   "scripts": {
     "ts-gen": "ts-node ./src/generate.ts",
-    "makelib": "tsc -p ./src/generated"
+    "makelib": "tsc -p ./src/generated",
+    "xsd2jsonschema": "ts-node ./src/convert.ts "
   },
-  "type": "commonjs"
+  "type": "es6",
+  "dependencies": {
+    "urijs": "^1.19.2"
+  }
 }

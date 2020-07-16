@@ -1,0 +1,149 @@
+{
+  "$id": "DC.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "This JSON Schema file was generated from DC.xsd on Thu Jul 16 2020 11:11:39 GMT+0200 (Central European Summer Time).  For more information please see http://www.xsd2jsonschema.org",
+  "description": "Schema tag attributes: xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:dc='http://www.omg.org/spec/DD/20100524/DC' targetNamespace='http://www.omg.org/spec/DD/20100524/DC' elementFormDefault='qualified' attributeFormDefault='unqualified'",
+  "properties": {
+    "Font": {
+      "$ref": "#/definitions/Font"
+    },
+    "Point": {
+      "$ref": "#/definitions/Point"
+    },
+    "Bounds": {
+      "$ref": "#/definitions/Bounds"
+    }
+  },
+  "type": "object",
+  "anyOf": [
+    {
+      "required": [
+        "Font"
+      ]
+    },
+    {
+      "required": [
+        "Point"
+      ]
+    },
+    {
+      "required": [
+        "Bounds"
+      ]
+    },
+    {
+      "required": [
+        "Font"
+      ]
+    },
+    {
+      "required": [
+        "Point"
+      ]
+    },
+    {
+      "required": [
+        "Bounds"
+      ]
+    }
+  ],
+  "definitions": {
+    "Font": {
+      "properties": {
+        "@name": {
+          "type": "string"
+        },
+        "@size": {
+          "type": "number"
+        },
+        "@isBold": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "integer"
+            }
+          ]
+        },
+        "@isItalic": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "integer"
+            }
+          ]
+        },
+        "@isUnderline": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "integer"
+            }
+          ]
+        },
+        "@isStrikeThrough": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "integer"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "Point": {
+      "required": [
+        "@x",
+        "@y"
+      ],
+      "properties": {
+        "@x": {
+          "type": "number"
+        },
+        "@y": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Bounds": {
+      "required": [
+        "@x",
+        "@y",
+        "@width",
+        "@height"
+      ],
+      "properties": {
+        "@x": {
+          "type": "number"
+        },
+        "@y": {
+          "type": "number"
+        },
+        "@width": {
+          "type": "number"
+        },
+        "@height": {
+          "type": "number"
+        }
+      },
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,291 @@
+{
+  "$id": "DI.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "This JSON Schema file was generated from DI.xsd on Thu Jul 16 2020 11:11:39 GMT+0200 (Central European Summer Time).  For more information please see http://www.xsd2jsonschema.org",
+  "description": "Schema tag attributes: xmlns:xsd='http://www.w3.org/2001/XMLSchema' xmlns:dc='http://www.omg.org/spec/DD/20100524/DC' xmlns:di='http://www.omg.org/spec/DD/20100524/DI' targetNamespace='http://www.omg.org/spec/DD/20100524/DI' elementFormDefault='qualified' attributeFormDefault='unqualified'",
+  "properties": {
+    "DiagramElement": {
+      "$ref": "#/definitions/DiagramElement"
+    },
+    "Diagram": {
+      "$ref": "#/definitions/Diagram"
+    },
+    "Style": {
+      "$ref": "#/definitions/Style"
+    },
+    "Node": {
+      "$ref": "#/definitions/Node"
+    },
+    "Edge": {
+      "$ref": "#/definitions/Edge"
+    },
+    "Shape": {
+      "$ref": "#/definitions/Shape"
+    },
+    "Plane": {
+      "$ref": "#/definitions/Plane"
+    },
+    "LabeledEdge": {
+      "$ref": "#/definitions/LabeledEdge"
+    },
+    "Label": {
+      "$ref": "#/definitions/Label"
+    },
+    "LabeledShape": {
+      "$ref": "#/definitions/LabeledShape"
+    }
+  },
+  "type": "object",
+  "anyOf": [
+    {
+      "required": [
+        "DiagramElement"
+      ]
+    },
+    {
+      "required": [
+        "Diagram"
+      ]
+    },
+    {
+      "required": [
+        "Style"
+      ]
+    },
+    {
+      "required": [
+        "Node"
+      ]
+    },
+    {
+      "required": [
+        "Edge"
+      ]
+    },
+    {
+      "required": [
+        "Shape"
+      ]
+    },
+    {
+      "required": [
+        "Plane"
+      ]
+    },
+    {
+      "required": [
+        "LabeledEdge"
+      ]
+    },
+    {
+      "required": [
+        "Label"
+      ]
+    },
+    {
+      "required": [
+        "LabeledShape"
+      ]
+    },
+    {
+      "required": [
+        "DiagramElement"
+      ]
+    },
+    {
+      "required": [
+        "Diagram"
+      ]
+    },
+    {
+      "required": [
+        "Node"
+      ]
+    },
+    {
+      "required": [
+        "Edge"
+      ]
+    },
+    {
+      "required": [
+        "LabeledEdge"
+      ]
+    },
+    {
+      "required": [
+        "Shape"
+      ]
+    },
+    {
+      "required": [
+        "LabeledShape"
+      ]
+    },
+    {
+      "required": [
+        "Label"
+      ]
+    },
+    {
+      "required": [
+        "Plane"
+      ]
+    },
+    {
+      "required": [
+        "Style"
+      ]
+    }
+  ],
+  "definitions": {
+    "DiagramElement": {
+      "properties": {
+        "extension": {},
+        "@id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Diagram": {
+      "properties": {
+        "@name": {
+          "type": "string"
+        },
+        "@documentation": {
+          "type": "string"
+        },
+        "@resolution": {
+          "type": "number"
+        },
+        "@id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Style": {
+      "properties": {
+        "@id": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Node": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DiagramElement"
+        },
+        {}
+      ]
+    },
+    "Edge": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/DiagramElement"
+        },
+        {
+          "required": [
+            "waypoint"
+          ],
+          "properties": {
+            "waypoint": {
+              "oneOf": [
+                {
+                  "$ref": "DC.json#/definitions/Point"
+                },
+                {
+                  "items": {
+                    "$ref": "DC.json#/definitions/Point"
+                  },
+                  "minItems": 2,
+                  "type": "array"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "Shape": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Node"
+        },
+        {
+          "required": [
+            "dc:Bounds"
+          ],
+          "properties": {
+            "dc:Bounds": {
+              "$ref": "DC.json#/definitions/Bounds"
+            }
+          }
+        }
+      ]
+    },
+    "Plane": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Node"
+        },
+        {
+          "properties": {
+            "di:DiagramElement": {
+              "oneOf": [
+                {
+                  "$ref": "#/definitions/DiagramElement"
+                },
+                {
+                  "items": {
+                    "$ref": "#/definitions/DiagramElement"
+                  },
+                  "type": "array"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "LabeledEdge": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Edge"
+        },
+        {}
+      ]
+    },
+    "Label": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Node"
+        },
+        {
+          "properties": {
+            "dc:Bounds": {
+              "$ref": "DC.json#/definitions/Bounds"
+            }
+          }
+        }
+      ]
+    },
+    "LabeledShape": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "#/definitions/Shape"
+        },
+        {}
+      ]
+    }
+  }
+}
