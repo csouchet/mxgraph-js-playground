@@ -35,62 +35,63 @@ import {
 } from './baseElement/rootElement/eventDefinition';
 
 export interface Model {
-  definitions?: TDefinitions[];
-  import?: TImport[];
+  definitions?: TDefinitions | TDefinitions[];
+  import?: TImport | TImport[];
 }
 
+// <xsd:anyAttribute namespace="##other" processContents="lax"/>
 export interface TDefinitions {
-  import?: TImport[];
-  extension?: TExtension[];
+  import?: TImport | TImport[];
+  extension?: TExtension | TExtension[];
 
   // rootElement
-  category?: TCategory[];
-  choreography?: TChoreography[];
-  collaboration?: TCollaboration[];
-  correlationProperty?: TCorrelationProperty[];
-  dataStore?: TDataStore[];
-  endPoint?: TEndPoint[];
-  error?: TError[];
-  escalation?: TEscalation[];
-  globalBusinessRuleTask?: TGlobalBusinessRuleTask[];
-  globalChoreographyTask?: TGlobalChoreographyTask[];
-  globalConversation?: TGlobalConversation[];
-  globalManualTask?: TGlobalManualTask[];
-  globalScriptTask?: TGlobalScriptTask[];
-  globalTask?: TGlobalTask[];
-  globalUserTask?: TGlobalUserTask[];
-  interface?: TInterface[];
-  itemDefinition?: TItemDefinition[];
-  message?: TMessage[];
-  partnerEntity?: TPartnerEntity[];
-  partnerRole?: TPartnerRole[];
-  process?: TProcess[];
-  resource?: TResource[];
-  rootElement?: TRootElement[];
-  signal?: TSignal[];
+  category?: TCategory | TCategory[];
+  choreography?: TChoreography | TChoreography[];
+  collaboration?: TCollaboration | TCollaboration[];
+  correlationProperty?: TCorrelationProperty | TCorrelationProperty[];
+  dataStore?: TDataStore | TDataStore[];
+  endPoint?: TEndPoint | TEndPoint[];
+  error?: TError | TError[];
+  escalation?: TEscalation | TEscalation[];
+  globalBusinessRuleTask?: TGlobalBusinessRuleTask | TGlobalBusinessRuleTask[];
+  globalChoreographyTask?: TGlobalChoreographyTask | TGlobalChoreographyTask[];
+  globalConversation?: TGlobalConversation | TGlobalConversation[];
+  globalManualTask?: TGlobalManualTask | TGlobalManualTask[];
+  globalScriptTask?: TGlobalScriptTask | TGlobalScriptTask[];
+  globalTask?: TGlobalTask | TGlobalTask[];
+  globalUserTask?: TGlobalUserTask | TGlobalUserTask[];
+  interface?: TInterface | TInterface[];
+  itemDefinition?: TItemDefinition | TItemDefinition[];
+  message?: TMessage | TMessage[];
+  partnerEntity?: TPartnerEntity | TPartnerEntity[];
+  partnerRole?: TPartnerRole | TPartnerRole[];
+  process?: TProcess | TProcess[];
+  resource?: TResource | TResource[];
+  rootElement?: TRootElement | TRootElement[];
+  signal?: TSignal | TSignal[];
 
   // eventDefinition
-  eventDefinition?: TEventDefinition[];
-  cancelEventDefinition?: TCancelEventDefinition[];
-  compensateEventDefinition?: TCompensateEventDefinition[];
-  conditionalEventDefinition?: TConditionalEventDefinition[];
-  errorEventDefinition?: TErrorEventDefinition[];
-  escalationEventDefinition?: TEscalationEventDefinition[];
-  linkEventDefinition?: TLinkEventDefinition[];
-  messageEventDefinition?: TMessageEventDefinition[];
-  signalEventDefinition?: TSignalEventDefinition[];
-  terminateEventDefinition?: TTerminateEventDefinition[];
-  timerEventDefinition?: TTimerEventDefinition[];
+  eventDefinition?: TEventDefinition | TEventDefinition[];
+  cancelEventDefinition?: TCancelEventDefinition | TCancelEventDefinition[];
+  compensateEventDefinition?: TCompensateEventDefinition | TCompensateEventDefinition[];
+  conditionalEventDefinition?: TConditionalEventDefinition | TConditionalEventDefinition[];
+  errorEventDefinition?: TErrorEventDefinition | TErrorEventDefinition[];
+  escalationEventDefinition?: TEscalationEventDefinition | TEscalationEventDefinition[];
+  linkEventDefinition?: TLinkEventDefinition | TLinkEventDefinition[];
+  messageEventDefinition?: TMessageEventDefinition | TMessageEventDefinition[];
+  signalEventDefinition?: TSignalEventDefinition | TSignalEventDefinition[];
+  terminateEventDefinition?: TTerminateEventDefinition | TTerminateEventDefinition[];
+  timerEventDefinition?: TTimerEventDefinition | TTimerEventDefinition[];
 
-  BPMNDiagram?: BPMNDiagram[];
-  relationship?: TRelationship[];
-  id: string;
-  name: string;
+  BPMNDiagram?: BPMNDiagram | BPMNDiagram[];
+  relationship?: TRelationship | TRelationship[];
+  id?: string;
+  name?: string;
   targetNamespace: string;
-  expressionLanguage: string;
-  typeLanguage: string;
-  exporter: string;
-  exporterVersion: string;
+  expressionLanguage?: string; // default="http://www.w3.org/1999/XPath"
+  typeLanguage?: string; // default="http://www.w3.org/2001/XMLSchema"
+  exporter?: string;
+  exporterVersion?: string;
 }
 
 export interface TImport {

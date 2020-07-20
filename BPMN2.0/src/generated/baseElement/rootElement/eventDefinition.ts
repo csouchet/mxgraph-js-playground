@@ -9,7 +9,7 @@ export interface TConditionalEventDefinition extends TEventDefinition {
 }
 
 export interface TLinkEventDefinition extends TEventDefinition {
-  source?: string[];
+  source?: string | string[];
   target?: string;
   name: string;
 }

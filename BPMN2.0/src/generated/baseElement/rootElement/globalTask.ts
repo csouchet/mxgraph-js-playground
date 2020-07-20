@@ -5,10 +5,10 @@ import { TRendering } from '../baseElement';
 
 export interface TGlobalTask extends TCallableElement {
   // resourceRole
-  resourceRole?: TResourceRole[];
-  performer?: TPerformer[];
-  humanPerformer?: THumanPerformer[];
-  potentialOwner?: TPotentialOwner[];
+  resourceRole?: TResourceRole | TResourceRole[];
+  performer?: TPerformer | TPerformer[];
+  humanPerformer?: THumanPerformer | THumanPerformer[];
+  potentialOwner?: TPotentialOwner | TPotentialOwner[];
 }
 
 export interface TGlobalBusinessRuleTask extends TGlobalTask {
@@ -23,7 +23,7 @@ export interface TGlobalScriptTask extends TGlobalTask {
 }
 
 export interface TGlobalUserTask extends TGlobalTask {
-  rendering?: TRendering[];
+  rendering?: TRendering | TRendering[];
   implementation?: tImplementation; // default="##unspecified"
 }
 

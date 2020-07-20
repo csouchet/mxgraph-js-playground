@@ -2,8 +2,8 @@ import { TBaseElement } from './baseElement';
 
 export interface TParticipant extends TBaseElement {
   participantMultiplicity?: TParticipantMultiplicity;
-  interfaceRef?: string[];
-  endPointRef?: string[];
+  interfaceRef?: string | string[];
+  endPointRef?: string | string[];
   name?: string;
   processRef?: string;
 }

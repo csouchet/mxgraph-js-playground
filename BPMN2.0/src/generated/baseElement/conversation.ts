@@ -5,20 +5,20 @@ import { TParticipantAssociation } from './participant';
 // abstract="true"
 export interface TConversationNode extends TBaseElement {
   correlationKey?: TCorrelationKey[];
-  participantRef?: string[];
-  messageFlowRef?: string[];
+  participantRef?: string | string[];
+  messageFlowRef?: string | string[];
   name?: string;
 }
 
 export interface TCallConversation extends TConversationNode {
-  participantAssociation?: TParticipantAssociation[];
+  participantAssociation?: TParticipantAssociation | TParticipantAssociation[];
   calledCollaborationRef?: string;
 }
 
 export interface TSubConversation extends TConversationNode {
   // conversationNode
-  conversationNode?: TConversationNode[];
-  callConversation?: TCallConversation[];
+  conversationNode?: TConversationNode | TConversationNode[];
+  callConversation?: TCallConversation | TCallConversation[];
   conversation?: TConversation[];
 }
 

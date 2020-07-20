@@ -18,29 +18,29 @@ import { TFlowNode } from '../flowElement';
 
 // abstract="true"
 export interface TEvent extends TFlowNode {
-  property?: TProperty[];
+  property?: TProperty | TProperty[];
 }
 // ======================== Catch event ========================
 // abstract="true"
 export interface TCatchEvent extends TEvent {
-  dataOutput?: TDataOutput[];
-  dataOutputAssociation?: TDataOutputAssociation[];
-  outputSet: TOutputSet;
+  dataOutput?: TDataOutput | TDataOutput[];
+  dataOutputAssociation?: TDataOutputAssociation | TDataOutputAssociation[];
+  outputSet?: TOutputSet;
 
   // eventDefinition
-  eventDefinition?: TEventDefinition[];
-  cancelEventDefinition?: TCancelEventDefinition[];
-  compensateEventDefinition?: TCompensateEventDefinition[];
-  conditionalEventDefinition?: TConditionalEventDefinition[];
-  errorEventDefinition?: TErrorEventDefinition[];
-  escalationEventDefinition?: TEscalationEventDefinition[];
-  linkEventDefinition?: TLinkEventDefinition[];
-  messageEventDefinition?: TMessageEventDefinition[];
-  signalEventDefinition?: TSignalEventDefinition[];
-  terminateEventDefinition?: TTerminateEventDefinition[];
-  timerEventDefinition?: TTimerEventDefinition[];
+  eventDefinition?: TEventDefinition | TEventDefinition[];
+  cancelEventDefinition?: TCancelEventDefinition | TCancelEventDefinition[];
+  compensateEventDefinition?: TCompensateEventDefinition | TCompensateEventDefinition[];
+  conditionalEventDefinition?: TConditionalEventDefinition | TConditionalEventDefinition[];
+  errorEventDefinition?: TErrorEventDefinition | TErrorEventDefinition[];
+  escalationEventDefinition?: TEscalationEventDefinition | TEscalationEventDefinition[];
+  linkEventDefinition?: TLinkEventDefinition | TLinkEventDefinition[];
+  messageEventDefinition?: TMessageEventDefinition | TMessageEventDefinition[];
+  signalEventDefinition?: TSignalEventDefinition | TSignalEventDefinition[];
+  terminateEventDefinition?: TTerminateEventDefinition | TTerminateEventDefinition[];
+  timerEventDefinition?: TTimerEventDefinition | TTimerEventDefinition[];
 
-  eventDefinitionRef?: string[];
+  eventDefinitionRef?: string | string[];
   parallelMultiple?: boolean; // default="false"
 }
 
@@ -58,24 +58,24 @@ export interface TStartEvent extends TCatchEvent {
 // ======================== Throw event ========================
 // abstract="true"
 export interface TThrowEvent extends TEvent {
-  dataInput?: TDataInput[];
-  dataInputAssociation?: TDataInputAssociation[];
+  dataInput?: TDataInput | TDataInput[];
+  dataInputAssociation?: TDataInputAssociation | TDataInputAssociation[];
   inputSet?: TInputSet;
 
   // eventDefinition
-  eventDefinition?: TEventDefinition[];
-  cancelEventDefinition?: TCancelEventDefinition[];
-  compensateEventDefinition?: TCompensateEventDefinition[];
-  conditionalEventDefinition?: TConditionalEventDefinition[];
-  errorEventDefinition?: TErrorEventDefinition[];
-  escalationEventDefinition?: TEscalationEventDefinition[];
-  linkEventDefinition?: TLinkEventDefinition[];
-  messageEventDefinition?: TMessageEventDefinition[];
-  signalEventDefinition?: TSignalEventDefinition[];
-  terminateEventDefinition?: TTerminateEventDefinition[];
-  timerEventDefinition?: TTimerEventDefinition[];
+  eventDefinition?: TEventDefinition | TEventDefinition[];
+  cancelEventDefinition?: TCancelEventDefinition | TCancelEventDefinition[];
+  compensateEventDefinition?: TCompensateEventDefinition | TCompensateEventDefinition[];
+  conditionalEventDefinition?: TConditionalEventDefinition | TConditionalEventDefinition[];
+  errorEventDefinition?: TErrorEventDefinition | TErrorEventDefinition[];
+  escalationEventDefinition?: TEscalationEventDefinition | TEscalationEventDefinition[];
+  linkEventDefinition?: TLinkEventDefinition | TLinkEventDefinition[];
+  messageEventDefinition?: TMessageEventDefinition | TMessageEventDefinition[];
+  signalEventDefinition?: TSignalEventDefinition | TSignalEventDefinition[];
+  terminateEventDefinition?: TTerminateEventDefinition | TTerminateEventDefinition[];
+  timerEventDefinition?: TTimerEventDefinition | TTimerEventDefinition[];
 
-  eventDefinitionRef?: string[];
+  eventDefinitionRef?: string | string[];
 }
 
 export type TImplicitThrowEvent = TThrowEvent;

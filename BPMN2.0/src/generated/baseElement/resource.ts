@@ -23,8 +23,8 @@ export interface TResourceParameterBinding extends TBaseElement {
 
 export interface TResourceRole extends TBaseElement {
   resourceRef?: string;
-  resourceParameterBinding?: TResourceParameterBinding[];
-  resourceAssignmentExpression?: TResourceAssignmentExpression;
+  resourceParameterBinding?: TResourceParameterBinding | TResourceParameterBinding[];
+  resourceAssignmentExpression?: TResourceAssignmentExpression | TResourceAssignmentExpression;
   name?: string;
 }
 

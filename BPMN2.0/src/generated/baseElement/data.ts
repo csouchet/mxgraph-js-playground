@@ -30,8 +30,8 @@ export interface TDataStoreReference extends TFlowElement {
 }
 
 export interface TDataAssociation extends TBaseElement {
-  assignment?: TAssignment[];
-  sourceRef?: string[];
+  assignment?: TAssignment | TAssignment[];
+  sourceRef?: string | string[];
   targetRef: string;
   transformation?: TFormalExpression;
 }

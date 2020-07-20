@@ -6,7 +6,7 @@ export interface TDocumentation {
 }
 
 export interface TExtension {
-  documentation?: TDocumentation[];
+  documentation?: TDocumentation | TDocumentation[];
   definition?: string;
   mustUnderstand?: boolean; // default="false"
 }

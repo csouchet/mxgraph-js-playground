@@ -35,6 +35,6 @@ export interface TScriptTask extends TTask {
 }
 
 export interface TUserTask extends TTask {
-  rendering?: TRendering[];
+  rendering?: TRendering | TRendering[];
   implementation?: tImplementation; // default="##unspecified"
 }

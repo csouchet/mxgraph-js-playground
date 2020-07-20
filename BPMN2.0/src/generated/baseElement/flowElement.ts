@@ -5,14 +5,14 @@ import { TAuditing, TBaseElement, TMonitoring } from './baseElement';
 export interface TFlowElement extends TBaseElement {
   auditing?: TAuditing;
   monitoring?: TMonitoring;
-  categoryValueRef?: string[];
+  categoryValueRef?: string | string[];
   name?: string;
 }
 
 // abstract="true"
 export interface TFlowNode extends TFlowElement {
-  incoming?: string[];
-  outgoing?: string[];
+  incoming?: string | string[];
+  outgoing?: string | string[];
 }
 
 export interface TSequenceFlow extends TFlowElement {

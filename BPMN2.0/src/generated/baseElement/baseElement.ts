@@ -6,7 +6,7 @@ import { TExpression, TFormalExpression } from './expression';
 // abstract="true"
 // <xsd:anyAttribute namespace="##other" processContents="lax"/>
 export interface TBaseElement {
-  documentation?: TDocumentation[];
+  documentation?: TDocumentation | TDocumentation[];
   extensionElements?: TExtensionElements;
   id?: string;
 }
@@ -14,7 +14,7 @@ export interface TBaseElement {
 // abstract="true" mixed="true"
 // <xsd:anyAttribute namespace="##other" processContents="lax"/>
 export interface TBaseElementWithMixedContent {
-  documentation?: TDocumentation[];
+  documentation?: TDocumentation | TDocumentation[];
   extensionElements?: TExtensionElements;
   id?: string;
 }
@@ -51,8 +51,8 @@ export interface TProperty extends TBaseElement {
 }
 
 export interface TRelationship extends TBaseElement {
-  source: string[];
-  target: string[];
+  source: string | string[];
+  target: string | string[];
   type: string;
   direction?: tRelationshipDirection;
 }
@@ -71,21 +71,21 @@ export interface TComplexBehaviorDefinition extends TBaseElement {
 
 export interface TLane extends TBaseElement {
   partitionElement?: TBaseElement;
-  flowNodeRef?: string[];
+  flowNodeRef?: string | string[];
   childLaneSet?: TLaneSet;
   name?: string;
   partitionElementRef?: string;
 }
 
 export interface TLaneSet extends TBaseElement {
-  lane?: TLane[];
+  lane?: TLane | TLane[];
   name?: string;
 }
 
 export interface TOperation extends TBaseElement {
   inMessageRef: string;
   outMessageRef?: string;
-  errorRef?: string[];
+  errorRef?: string | string[];
   name: string;
   implementationRef?: string;
 }

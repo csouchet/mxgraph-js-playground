@@ -85,67 +85,67 @@ export interface TSignal extends TRootElement {
 export interface TProcess extends TCallableElement {
   auditing?: TAuditing;
   monitoring?: TMonitoring;
-  property?: TProperty[];
-  laneSet?: TLaneSet[];
+  property?: TProperty | TProperty[];
+  laneSet?: TLaneSet | TLaneSet[];
 
   // flowElement
-  flowElement?: TFlowElement[];
-  sequenceFlow?: TSequenceFlow[];
-  callChoreography?: TCallChoreography[];
-  choreographyTask?: TChoreographyTask[];
-  subChoreography?: TSubChoreography[];
-  callActivity?: TCallActivity[];
+  flowElement?: TFlowElement | TFlowElement[];
+  sequenceFlow?: TSequenceFlow | TSequenceFlow[];
+  callChoreography?: TCallChoreography | TCallChoreography[];
+  choreographyTask?: TChoreographyTask | TChoreographyTask[];
+  subChoreography?: TSubChoreography | TSubChoreography[];
+  callActivity?: TCallActivity | TCallActivity[];
 
   // dataObject
-  dataObject?: TDataObject[];
-  dataObjectReference?: TDataObjectReference[];
-  dataStoreReference?: TDataStoreReference[];
+  dataObject?: TDataObject | TDataObject[];
+  dataObjectReference?: TDataObjectReference | TDataObjectReference[];
+  dataStoreReference?: TDataStoreReference | TDataStoreReference[];
 
   // event
-  event?: TEvent[];
-  intermediateCatchEvent?: TIntermediateCatchEvent[];
-  boundaryEvent?: TBoundaryEvent[];
-  startEvent?: TStartEvent[];
-  implicitThrowEvent?: TImplicitThrowEvent[];
-  intermediateThrowEvent?: TIntermediateThrowEvent[];
-  endEvent?: TEndEvent[];
+  event?: TEvent | TEvent[];
+  intermediateCatchEvent?: TIntermediateCatchEvent | TIntermediateCatchEvent[];
+  boundaryEvent?: TBoundaryEvent | TBoundaryEvent[];
+  startEvent?: TStartEvent | TStartEvent[];
+  implicitThrowEvent?: TImplicitThrowEvent | TImplicitThrowEvent[];
+  intermediateThrowEvent?: TIntermediateThrowEvent | TIntermediateThrowEvent[];
+  endEvent?: TEndEvent | TEndEvent[];
 
   // sub process
-  subProcess?: TSubProcess[];
-  adHocSubProcess?: TAdHocSubProcess[];
-  transaction?: TTransaction[];
+  subProcess?: TSubProcess | TSubProcess[];
+  adHocSubProcess?: TAdHocSubProcess | TAdHocSubProcess[];
+  transaction?: TTransaction | TTransaction[];
 
   // gateway
-  complexGateway?: TComplexGateway[];
-  eventBasedGateway?: TEventBasedGateway[];
-  exclusiveGateway?: TExclusiveGateway[];
-  inclusiveGateway?: TInclusiveGateway[];
-  parallelGateway?: TParallelGateway[];
+  complexGateway?: TComplexGateway | TComplexGateway[];
+  eventBasedGateway?: TEventBasedGateway | TEventBasedGateway[];
+  exclusiveGateway?: TExclusiveGateway | TExclusiveGateway[];
+  inclusiveGateway?: TInclusiveGateway | TInclusiveGateway[];
+  parallelGateway?: TParallelGateway | TParallelGateway[];
 
   // task
-  task?: TTask[];
-  businessRuleTask?: TBusinessRuleTask[];
-  manualTask?: TManualTask[];
-  receiveTask?: TReceiveTask[];
-  sendTask?: TSendTask[];
-  serviceTask?: TServiceTask[];
-  scriptTask?: TScriptTask[];
-  userTask?: TUserTask[];
+  task?: TTask | TTask[];
+  businessRuleTask?: TBusinessRuleTask | TBusinessRuleTask[];
+  manualTask?: TManualTask | TManualTask[];
+  receiveTask?: TReceiveTask | TReceiveTask[];
+  sendTask?: TSendTask | TSendTask[];
+  serviceTask?: TServiceTask | TServiceTask[];
+  scriptTask?: TScriptTask | TScriptTask[];
+  userTask?: TUserTask | TUserTask[];
 
   // artifact
-  artifact?: TArtifact[];
-  association?: TAssociation[];
-  group?: TGroup[];
-  textAnnotation?: TTextAnnotation[];
+  artifact?: TArtifact | TArtifact[];
+  association?: TAssociation | TAssociation[];
+  group?: TGroup | TGroup[];
+  textAnnotation?: TTextAnnotation | TTextAnnotation[];
 
   // resourceRole
-  resourceRole?: TResourceRole[];
-  performer?: TPerformer[];
-  humanPerformer?: THumanPerformer[];
-  potentialOwner?: TPotentialOwner[];
+  resourceRole?: TResourceRole | TResourceRole[];
+  performer?: TPerformer | TPerformer[];
+  humanPerformer?: THumanPerformer | THumanPerformer[];
+  potentialOwner?: TPotentialOwner | TPotentialOwner[];
 
-  correlationSubscription?: TCorrelationSubscription[];
-  supports?: string[];
+  correlationSubscription?: TCorrelationSubscription | TCorrelationSubscription[];
+  supports?: string | string[];
   processType?: tProcessType; // default="None"
   isClosed?: boolean; // default="false"
   isExecutable?: boolean;

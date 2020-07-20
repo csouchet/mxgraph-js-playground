@@ -3,15 +3,15 @@ import { Font } from './DC';
 
 export interface BPMNDiagram extends Diagram {
   BPMNPlane: BPMNPlane;
-  BPMNLabelStyle?: BPMNLabelStyle[];
+  BPMNLabelStyle?: BPMNLabelStyle | BPMNLabelStyle[];
 }
 
 export interface BPMNPlane extends Plane {
-  bpmnElement: string;
+  bpmnElement?: string;
 }
 
 export interface BPMNEdge extends LabeledEdge {
-  bpmnLabel?: BPMNLabel[];
+  BPMNLabel?: BPMNLabel | BPMNLabel[];
   bpmnElement?: string;
   sourceElement?: string;
   targetElement?: string;
@@ -19,7 +19,7 @@ export interface BPMNEdge extends LabeledEdge {
 }
 
 export interface BPMNShape extends LabeledShape {
-  bpmnLabel?: BPMNLabel[];
+  BPMNLabel?: BPMNLabel | BPMNLabel[];
   bpmnElement?: string;
   isHorizontal?: boolean;
   isExpanded?: boolean;
@@ -34,10 +34,10 @@ export interface BPMNLabel extends Label {
 }
 
 export interface BPMNLabelStyle extends Style {
-  font?: Font[];
+  Font?: Font | Font[];
 }
 
-enum ParticipantBandKind {
+export enum ParticipantBandKind {
   topInitiating = 'top_initiating',
   middleInitiating = 'middle_initiating',
   bottomInitiating = 'bottom_initiating',
@@ -46,7 +46,7 @@ enum ParticipantBandKind {
   bottomNonInitiating = 'bottom_non_initiating',
 }
 
-enum MessageVisibleKind {
+export enum MessageVisibleKind {
   initiating = 'initiating',
   nonInitiating = 'non_initiating',
 }

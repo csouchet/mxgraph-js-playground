@@ -1,25 +1,24 @@
 import { Bounds, Point } from './DC';
 import { BPMNEdge, BPMNLabel, BPMNShape } from './BPMNDI';
+import { TExtension } from './Semantic';
 
+// <xsd:any namespace="##other" minOccurs="0" maxOccurs="unbounded" />
 export interface DiagramElement {
-  id: string;
-  extension?: Extension[];
+  id?: string;
+  extension?: TExtension | TExtension[];
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-export interface Extension {}
-
 export interface Diagram {
-  name: string;
-  documentation: string;
-  resolution: number;
-  id: string;
+  name?: string;
+  documentation?: string;
+  resolution?: number;
+  id?: string;
 }
 
 export type Node = DiagramElement;
 
 export interface Edge extends DiagramElement {
-  waypoint: Point[];
+  waypoint: Point | Point[];
 }
 
 export type LabeledEdge = Edge;
@@ -35,9 +34,9 @@ export interface Label extends Node {
 }
 
 export interface Plane extends Node {
-  BPMNEdge?: BPMNEdge[];
-  BPMNShape?: BPMNShape[];
-  BPMNLabel?: BPMNLabel[];
+  BPMNEdge?: BPMNEdge | BPMNEdge[];
+  BPMNShape?: BPMNShape | BPMNShape[];
+  BPMNLabel?: BPMNLabel | BPMNLabel[];
 }
 
 export interface Style {

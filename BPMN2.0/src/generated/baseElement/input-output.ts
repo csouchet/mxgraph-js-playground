@@ -8,24 +8,24 @@ export interface TInputOutputBinding extends TBaseElement {
 }
 
 export interface TInputOutputSpecification extends TBaseElement {
-  dataInput?: TDataInput[];
-  dataOutput?: TDataOutput[];
-  inputSet: TInputSet[];
-  outputSet: TOutputSet[];
+  dataInput?: TDataInput | TDataInput[];
+  dataOutput?: TDataOutput | TDataOutput[];
+  inputSet: TInputSet | TInputSet[];
+  outputSet: TOutputSet | TOutputSet[];
 }
 
 export interface TInputSet extends TBaseElement {
-  dataInputRefs?: string[];
-  optionalInputRefs?: string[];
-  whileExecutingInputRefs?: string[];
-  outputSetRefs?: string[];
+  dataInputRefs?: string | string[];
+  optionalInputRefs?: string | string[];
+  whileExecutingInputRefs?: string | string[];
+  outputSetRefs?: string | string[];
   name?: string;
 }
 
 export interface TOutputSet extends TBaseElement {
-  dataOutputRefs?: string[];
-  optionalOutputRefs?: string[];
-  whileExecutingOutputRefs?: string[];
-  inputSetRefs?: string[];
+  dataOutputRefs?: string | string[];
+  optionalOutputRefs?: string | string[];
+  whileExecutingOutputRefs?: string | string[];
+  inputSetRefs?: string | string[];
   name?: string;
 }

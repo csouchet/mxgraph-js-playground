@@ -6,7 +6,7 @@ import { TBaseElement, TComplexBehaviorDefinition } from './baseElement';
 export type TLoopCharacteristics = TBaseElement;
 
 export interface TMultiInstanceLoopCharacteristics extends TLoopCharacteristics {
-  complexBehaviorDefinition?: TComplexBehaviorDefinition[];
+  complexBehaviorDefinition?: TComplexBehaviorDefinition | TComplexBehaviorDefinition[];
   loopCardinality?: TExpression;
   loopDataInputRef?: string;
   loopDataOutputRef?: string;
