@@ -1,9 +1,15 @@
 import { TInputOutputBinding, TInputOutputSpecification } from '../input-output';
 import { TAuditing, TBaseElement, TCategoryValue, TLaneSet, TMonitoring, TOperation, TProperty } from '../baseElement';
-import { TResourceParameter, TResourceRole } from '../resource';
+import { THumanPerformer, TPerformer, TPotentialOwner, TResourceParameter, TResourceRole } from '../resource';
 import { TCorrelationSubscription } from '../correlation';
-import { TArtifact } from '../artifact';
-import { TFlowElement } from '../flowElement';
+import { TArtifact, TAssociation, TGroup, TTextAnnotation } from '../artifact';
+import { TFlowElement, TSequenceFlow } from '../flowElement';
+import { TBoundaryEvent, TEndEvent, TEvent, TImplicitThrowEvent, TIntermediateCatchEvent, TIntermediateThrowEvent, TStartEvent } from '../flowNode/event';
+import { TCallChoreography, TChoreographyTask, TSubChoreography } from '../flowNode/choreographyActivity';
+import { TAdHocSubProcess, TCallActivity, TSubProcess, TTransaction } from '../flowNode/activity/activity';
+import { TComplexGateway, TEventBasedGateway, TExclusiveGateway, TInclusiveGateway, TParallelGateway } from '../flowNode/gateway';
+import { TDataObject, TDataObjectReference, TDataStoreReference } from '../data';
+import { TBusinessRuleTask, TManualTask, TReceiveTask, TScriptTask, TSendTask, TServiceTask, TTask, TUserTask } from '../flowNode/activity/task';
 
 // abstract="true"
 export type TRootElement = TBaseElement;
@@ -15,30 +21,25 @@ export interface TCallableElement extends TRootElement {
   name?: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TCategory extends TRootElement {
   categoryValue?: TCategoryValue[];
   name?: string;
 }
 
-// substitutionGroup="rootElement"
 export type TEndPoint = TRootElement;
 
-// substitutionGroup="rootElement"
 export interface TError extends TRootElement {
   name?: string;
   errorCode?: string;
   structureRef?: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TEscalation extends TRootElement {
   name?: string;
   escalationCode?: string;
   structureRef?: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TItemDefinition extends TRootElement {
   structureRef?: string;
   isCollection?: boolean; // default="false"
@@ -50,52 +51,99 @@ enum tItemKind {
   Physical = 'Physical',
 }
 
-// substitutionGroup="rootElement"
 export interface TMessage extends TRootElement {
   name?: string;
   itemRef?: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TInterface extends TRootElement {
   operation: TOperation[];
   name: string;
   implementationRef?: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TPartnerEntity extends TRootElement {
   participantRef?: string[];
   name?: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TPartnerRole extends TRootElement {
   participantRef?: string[];
   name?: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TResource extends TRootElement {
   resourceParameter?: TResourceParameter[];
   name: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TSignal extends TRootElement {
   name?: string;
   structureRef?: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TProcess extends TCallableElement {
   auditing?: TAuditing;
   monitoring?: TMonitoring;
   property?: TProperty[];
   laneSet?: TLaneSet[];
+
+  // flowElement
   flowElement?: TFlowElement[];
+  sequenceFlow?: TSequenceFlow[];
+  callChoreography?: TCallChoreography[];
+  choreographyTask?: TChoreographyTask[];
+  subChoreography?: TSubChoreography[];
+  callActivity?: TCallActivity[];
+
+  // dataObject
+  dataObject?: TDataObject[];
+  dataObjectReference?: TDataObjectReference[];
+  dataStoreReference?: TDataStoreReference[];
+
+  // event
+  event?: TEvent[];
+  intermediateCatchEvent?: TIntermediateCatchEvent[];
+  boundaryEvent?: TBoundaryEvent[];
+  startEvent?: TStartEvent[];
+  implicitThrowEvent?: TImplicitThrowEvent[];
+  intermediateThrowEvent?: TIntermediateThrowEvent[];
+  endEvent?: TEndEvent[];
+
+  // sub process
+  subProcess?: TSubProcess[];
+  adHocSubProcess?: TAdHocSubProcess[];
+  transaction?: TTransaction[];
+
+  // gateway
+  complexGateway?: TComplexGateway[];
+  eventBasedGateway?: TEventBasedGateway[];
+  exclusiveGateway?: TExclusiveGateway[];
+  inclusiveGateway?: TInclusiveGateway[];
+  parallelGateway?: TParallelGateway[];
+
+  // task
+  task?: TTask[];
+  businessRuleTask?: TBusinessRuleTask[];
+  manualTask?: TManualTask[];
+  receiveTask?: TReceiveTask[];
+  sendTask?: TSendTask[];
+  serviceTask?: TServiceTask[];
+  scriptTask?: TScriptTask[];
+  userTask?: TUserTask[];
+
+  // artifact
   artifact?: TArtifact[];
+  association?: TAssociation[];
+  group?: TGroup[];
+  textAnnotation?: TTextAnnotation[];
+
+  // resourceRole
   resourceRole?: TResourceRole[];
+  performer?: TPerformer[];
+  humanPerformer?: THumanPerformer[];
+  potentialOwner?: TPotentialOwner[];
+
   correlationSubscription?: TCorrelationSubscription[];
   supports?: string[];
   processType?: tProcessType; // default="None"

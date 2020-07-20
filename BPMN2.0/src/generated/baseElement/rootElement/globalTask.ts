@@ -1,28 +1,27 @@
 import { TCallableElement } from './rootElement';
-import { TResourceRole } from '../resource';
+import { THumanPerformer, TPerformer, TPotentialOwner, TResourceRole } from '../resource';
 import { TScript } from '../../Semantic';
 import { TRendering } from '../baseElement';
 
-// substitutionGroup="rootElement"
 export interface TGlobalTask extends TCallableElement {
+  // resourceRole
   resourceRole?: TResourceRole[];
+  performer?: TPerformer[];
+  humanPerformer?: THumanPerformer[];
+  potentialOwner?: TPotentialOwner[];
 }
 
-// substitutionGroup="rootElement"
 export interface TGlobalBusinessRuleTask extends TGlobalTask {
   implementation?: tImplementation; // default="##unspecified"
 }
 
-// substitutionGroup="rootElement"
 export type TGlobalManualTask = TGlobalTask;
 
-// substitutionGroup="rootElement"
 export interface TGlobalScriptTask extends TGlobalTask {
   script?: TScript;
   scriptLanguage?: string;
 }
 
-// substitutionGroup="rootElement"
 export interface TGlobalUserTask extends TGlobalTask {
   rendering?: TRendering[];
   implementation?: tImplementation; // default="##unspecified"

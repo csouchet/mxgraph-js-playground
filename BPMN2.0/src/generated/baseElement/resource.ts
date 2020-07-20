@@ -1,8 +1,10 @@
 import { TBaseElement } from './baseElement';
-import { TExpression } from './expression';
+import { TExpression, TFormalExpression } from './expression';
 
 export interface TResourceAssignmentExpression extends TBaseElement {
+  // expression
   expression: TExpression;
+  formalExpression: TFormalExpression;
 }
 
 export interface TResourceParameter extends TBaseElement {
@@ -12,7 +14,10 @@ export interface TResourceParameter extends TBaseElement {
 }
 
 export interface TResourceParameterBinding extends TBaseElement {
+  // expression
   expression: TExpression;
+  formalExpression: TFormalExpression;
+
   parameterRef: string;
 }
 
@@ -24,11 +29,8 @@ export interface TResourceRole extends TBaseElement {
 }
 
 // ======================== Performer ========================
-// substitutionGroup="resourceRole"
 export type TPerformer = TResourceRole;
 
-// substitutionGroup="performer"
 export type THumanPerformer = TPerformer;
 
-// substitutionGroup="performer"
 export type TPotentialOwner = THumanPerformer;

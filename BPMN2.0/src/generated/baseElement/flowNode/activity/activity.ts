@@ -1,40 +1,53 @@
-import { TFlowNode } from '../../../Semantic';
 import { TInputOutputSpecification } from '../../input-output';
-import { TFlowElement, TLaneSet, TProperty } from '../../baseElement';
+import { TLaneSet, TProperty } from '../../baseElement';
 import { TDataInputAssociation, TDataOutputAssociation } from '../../data';
-import { TResourceRole } from '../../resource';
-import { TLoopCharacteristics } from '../../loopCharacteristics';
+import { THumanPerformer, TPerformer, TPotentialOwner, TResourceRole } from '../../resource';
+import { TLoopCharacteristics, TMultiInstanceLoopCharacteristics, TStandardLoopCharacteristics } from '../../loopCharacteristics';
 import { TExpression } from '../../expression';
-import { TArtifact } from '../../artifact';
+import { TArtifact, TAssociation, TGroup, TTextAnnotation } from '../../artifact';
+import { TFlowElement, TFlowNode } from '../../flowElement';
 
 // abstract="true"
-export interface TActivity extends TFlowNode{
+export interface TActivity extends TFlowNode {
   ioSpecification?: TInputOutputSpecification;
   property?: TProperty[];
   dataInputAssociation?: TDataInputAssociation[];
   dataOutputAssociation?: TDataOutputAssociation[];
+
+  // resourceRole
   resourceRole?: TResourceRole[];
+  performer?: TPerformer[];
+  humanPerformer?: THumanPerformer[];
+  potentialOwner?: TPotentialOwner[];
+
+  // loopCharacteristics
   loopCharacteristics?: TLoopCharacteristics[];
+  multiInstanceLoopCharacteristics?: TMultiInstanceLoopCharacteristics[];
+  standardLoopCharacteristics?: TStandardLoopCharacteristics[];
+
   isForCompensation?: boolean; // default="false"
   startQuantity?: number; // default="1"
   completionQuantity?: number; // default="1"
   default?: string;
 }
 
-// substitutionGroup="flowElement"
-export interface TCallActivity extends TActivity{
+export interface TCallActivity extends TActivity {
   calledElement?: string;
 }
 
-// substitutionGroup="flowElement"
 export interface TSubProcess extends TActivity {
   laneSet?: TLaneSet[];
   flowElement?: TFlowElement[];
+
+  // artifact
   artifact?: TArtifact[];
+  association?: TAssociation[];
+  group?: TGroup[];
+  textAnnotation?: TTextAnnotation[];
+
   triggeredByEvent?: boolean; // default="false"
 }
 
-// substitutionGroup="flowElement"
 export interface TAdHocSubProcess extends TSubProcess {
   completionCondition?: TExpression;
   cancelRemainingInstances?: boolean; // default="true"
@@ -46,7 +59,6 @@ enum tAdHocOrdering {
   Sequential = 'Sequential',
 }
 
-// substitutionGroup="flowElement"
 export interface TTransaction extends TSubProcess {
   method?: tTransactionMethod; //default="##Compensate"
 }

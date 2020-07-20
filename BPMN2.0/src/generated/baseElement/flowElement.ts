@@ -15,7 +15,6 @@ export interface TFlowNode extends TFlowElement {
   outgoing?: string[];
 }
 
-// substitutionGroup="flowElement"
 export interface TSequenceFlow extends TFlowElement {
   conditionExpression?: TExpression;
   sourceRef: string;

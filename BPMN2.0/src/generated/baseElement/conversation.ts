@@ -10,18 +10,18 @@ export interface TConversationNode extends TBaseElement {
   name?: string;
 }
 
-// substitutionGroup="conversationNode"
 export interface TCallConversation extends TConversationNode {
   participantAssociation?: TParticipantAssociation[];
   calledCollaborationRef?: string;
 }
 
-// substitutionGroup="conversationNode"
 export interface TSubConversation extends TConversationNode {
+  // conversationNode
   conversationNode?: TConversationNode[];
+  callConversation?: TCallConversation[];
+  conversation?: TConversation[];
 }
 
-// substitutionGroup="conversationNode"
 export type TConversation = TConversationNode;
 
 export interface TConversationAssociation extends TBaseElement {

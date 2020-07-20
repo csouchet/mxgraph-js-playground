@@ -2,7 +2,6 @@ import { TBaseElement } from './baseElement';
 import { TRootElement } from './rootElement/rootElement';
 import { TFormalExpression } from './expression';
 
-// substitutionGroup="rootElement"
 export interface TCorrelationProperty extends TRootElement {
   correlationPropertyRetrievalExpression: TCorrelationPropertyRetrievalExpression[];
   name?: string;

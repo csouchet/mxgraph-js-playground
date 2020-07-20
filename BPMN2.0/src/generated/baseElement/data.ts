@@ -11,21 +11,18 @@ export interface TDataState {
   name?: string;
 }
 
-// substitutionGroup="flowElement"
 export interface TDataObject extends TFlowElement {
   dataState?: TDataState;
   itemSubjectRef?: string;
   isCollection?: boolean; // default="false"
 }
 
-// substitutionGroup="flowElement"
 export interface TDataObjectReference extends TFlowElement {
   dataState?: TDataState;
   itemSubjectRef?: string;
   dataObjectRef?: string;
 }
 
-// substitutionGroup="flowElement"
 export interface TDataStoreReference extends TFlowElement {
   dataState?: TDataState;
   itemSubjectRef?: string;
@@ -53,7 +50,6 @@ export interface TDataOutput extends TBaseElement {
   isCollection?: boolean; // default="false"
 }
 
-// substitutionGroup="rootElement"
 export interface TDataStore extends TRootElement {
   dataState?: TDataState;
   name?: string;

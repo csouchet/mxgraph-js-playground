@@ -1,17 +1,27 @@
 import { TRootElement } from './rootElement';
-import { TConversationAssociation, TConversationLink, TConversationNode } from '../conversation';
+import { TCallConversation, TConversation, TConversationAssociation, TConversationLink, TConversationNode, TSubConversation } from '../conversation';
 import { TMessageFlow, TMessageFlowAssociation } from '../baseElement';
 import { TParticipant, TParticipantAssociation } from '../participant';
-import { TArtifact } from '../artifact';
+import { TArtifact, TAssociation, TGroup, TTextAnnotation } from '../artifact';
 import { TCorrelationKey } from '../correlation';
 import { TFlowElement } from '../flowElement';
 
-// substitutionGroup="rootElement"
 export interface TCollaboration extends TRootElement {
   participant?: TParticipant[];
   messageFlow?: TMessageFlow[];
+
+  // artifact
   artifact?: TArtifact[];
+  association?: TAssociation[];
+  group?: TGroup[];
+  textAnnotation?: TTextAnnotation[];
+
+  // conversationNode
   conversationNode?: TConversationNode[];
+  callConversation?: TCallConversation[];
+  conversation?: TConversation[];
+  subConversation?: TSubConversation[];
+
   conversationAssociation?: TConversationAssociation[];
   participantAssociation?: TParticipantAssociation[];
   messageFlowAssociation?: TMessageFlowAssociation[];
@@ -22,15 +32,12 @@ export interface TCollaboration extends TRootElement {
   isClosed?: boolean; // default="false"
 }
 
-// substitutionGroup="collaboration"
 export type TGlobalConversation = TCollaboration;
 
-// substitutionGroup="collaboration"
 export interface TChoreography extends TCollaboration {
   flowElement?: TFlowElement[];
 }
 
-// substitutionGroup="choreography"
 export interface TGlobalChoreographyTask extends TChoreography {
   initiatingParticipantRef?: string;
 }

@@ -1,8 +1,7 @@
-import { TFlowNode } from '../../Semantic';
 import { TCorrelationKey } from '../correlation';
 import { TParticipantAssociation } from '../participant';
-import { TArtifact } from '../artifact';
-import { TFlowElement } from '../baseElement';
+import { TArtifact, TAssociation, TGroup, TTextAnnotation } from '../artifact';
+import { TFlowElement, TFlowNode } from '../flowElement';
 
 // abstract="true"
 export interface TChoreographyActivity extends TFlowNode {
@@ -12,21 +11,23 @@ export interface TChoreographyActivity extends TFlowNode {
   loopType?: tChoreographyLoopType; // default="None"
 }
 
-// substitutionGroup="flowElement"
 export interface TCallChoreography extends TChoreographyActivity {
   participantAssociation?: TParticipantAssociation[];
   calledChoreographyRef?: string;
 }
 
-// substitutionGroup="flowElement"
 export interface TChoreographyTask extends TChoreographyActivity {
   messageFlowRef: string[];
 }
 
-// substitutionGroup="flowElement"
 export interface TSubChoreography extends TChoreographyActivity {
   flowElement?: TFlowElement[];
+
+  // artifact
   artifact?: TArtifact[];
+  association?: TAssociation[];
+  group?: TGroup[];
+  textAnnotation?: TTextAnnotation[];
 }
 
 enum tChoreographyLoopType {

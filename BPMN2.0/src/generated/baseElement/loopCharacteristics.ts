@@ -5,7 +5,6 @@ import { TBaseElement, TComplexBehaviorDefinition } from './baseElement';
 // abstract="true"
 export type TLoopCharacteristics = TBaseElement;
 
-// substitutionGroup="loopCharacteristics"
 export interface TMultiInstanceLoopCharacteristics extends TLoopCharacteristics {
   complexBehaviorDefinition?: TComplexBehaviorDefinition[];
   loopCardinality?: TExpression;
@@ -20,7 +19,6 @@ export interface TMultiInstanceLoopCharacteristics extends TLoopCharacteristics 
   noneBehaviorEventRef?: string;
 }
 
-// substitutionGroup="loopCharacteristics"
 export interface TStandardLoopCharacteristics extends TLoopCharacteristics {
   loopCondition?: TExpression;
   testBefore?: boolean; // default="false"
