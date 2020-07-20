@@ -1,44 +1,31 @@
-/***********
-generated template classes for ./src/BPMN20.xsd 2/26/2020, 11:42:11 AM
-***********/
-import { Extension } from './DI';
 import { BPMNDiagram } from './BPMNDI';
-import { Semantic, TRelationship, TRootElement } from './Semantic';
+import { TExtension, TRelationship, TRootElement } from './Semantic';
 
-export class BPMN20 extends Semantic {
-  public tDefinitions: TDefinitions;
-  public tImport: TImport;
-
-  public constructor(props?: BPMN20) {
-    super();
-    this['@class'] = '.BPMN20';
-
-    (<any>Object).assign(this, <any>props);
-  }
+export interface Model {
+  definitions?: TDefinitions[];
+  import?: TImport[];
 }
 
-export class TDefinitions {
-  public import?: TImport[];
-  public extension?: Extension[];
-  public rootElement?: TRootElement[];
-  public BPMNDiagram?: BPMNDiagram[];
-  public relationship?: TRelationship[];
+export interface TDefinitions {
+  import?: TImport[];
+  extension?: TExtension[];
 
-  public constructor(props?: TDefinitions) {
-    this['@class'] = '.TDefinitions';
+  // TODO : To replace by implementations
+  rootElement?: TRootElement[];
 
-    (<any>Object).assign(this, <any>props);
-  }
+  BPMNDiagram?: BPMNDiagram[];
+  relationship?: TRelationship[];
+  id: string;
+  name: string;
+  targetNamespace: string;
+  expressionLanguage: string;
+  typeLanguage: string;
+  exporter: string;
+  exporterVersion: string;
 }
 
-export class TImport {
-  public namespace: string;
-  public location: string;
-  public importType: string;
-
-  public constructor(props?: TImport) {
-    this['@class'] = '.TImport';
-
-    (<any>Object).assign(this, <any>props);
-  }
+export interface TImport {
+  namespace: string;
+  location: string;
+  importType: string;
 }

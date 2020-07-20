@@ -1,138 +1,45 @@
-/***********
-generated template classes for ./src/DI.xsd 2/26/2020, 11:42:11 AM
-***********/
+import { Bounds, Point } from './DC';
+import { BPMNEdge, BPMNLabel, BPMNShape } from './BPMNDI';
 
-import * as dc from './DC';
-
-export class DI {
-  public diagramElement: DiagramElement;
-  public diagram: Diagram;
-  public node: Node;
-  public edge: Edge;
-  public labeledEdge: LabeledEdge;
-  public shape: Shape;
-  public labeledShape: LabeledShape;
-  public label: Label;
-  public plane: Plane;
-  public style: Style;
-
-  public constructor(props?: DI) {
-    this['@class'] = '.DI';
-
-    (<any>Object).assign(this, <any>props);
-  }
+export interface DiagramElement {
+  id: string;
+  extension?: Extension[];
 }
 
-export abstract class DiagramElement {
-  public extension?: Extension;
-  public id;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface Extension {}
 
-  public constructor(props?: DiagramElement) {
-    this['@class'] = '.DiagramElement';
-
-    (<any>Object).assign(this, <any>props);
-  }
+export interface Diagram {
+  name: string;
+  documentation: string;
+  resolution: number;
+  id: string;
 }
 
-export abstract class Extension {
-  public constructor(props?: Extension) {
-    this['@class'] = '.Extension';
+export type Node = DiagramElement;
 
-    (<any>Object).assign(this, <any>props);
-  }
+export interface Edge extends DiagramElement {
+  waypoint: Point[];
 }
 
-export abstract class Diagram {
-  public name: string;
-  public documentation: string;
-  public resolution: number;
-  public id: string;
+export type LabeledEdge = Edge;
 
-  public constructor(props?: Diagram) {
-    this['@class'] = '.Diagram';
-
-    (<any>Object).assign(this, <any>props);
-  }
+export interface Shape extends Node {
+  Bounds: Bounds;
 }
 
-export abstract class Node extends DiagramElement {
-  public constructor(props?: Node) {
-    this['@class'] = '.Node';
+export type LabeledShape = Shape;
 
-    (<any>Object).assign(this, <any>props);
-  }
+export interface Label extends Node {
+  Bounds?: Bounds;
 }
 
-export abstract class LabeledEdge {
-  public constructor(props?: LabeledEdge) {
-    this['@class'] = '.LabeledEdge';
-
-    (<any>Object).assign(this, <any>props);
-  }
+export interface Plane extends Node {
+  BPMNEdge?: BPMNEdge[];
+  BPMNShape?: BPMNShape[];
+  BPMNLabel?: BPMNLabel[];
 }
 
-export abstract class LabeledShape {
-  public constructor(props?: LabeledShape) {
-    this['@class'] = '.LabeledShape';
-
-    (<any>Object).assign(this, <any>props);
-  }
-}
-
-export abstract class Style {
-  public id: string;
-
-  public constructor(props?: Style) {
-    this['@class'] = '.Style';
-
-    (<any>Object).assign(this, <any>props);
-  }
-}
-
-export abstract class Edge extends DiagramElement {
-  public waypoint: dc.Point[];
-
-  public constructor(props?: Edge) {
-    super();
-
-    this['@class'] = '.Edge';
-
-    (<any>Object).assign(this, <any>props);
-  }
-}
-
-export abstract class Shape extends Node {
-  public bounds: dc.Bounds;
-
-  public constructor(props?: Shape) {
-    super();
-
-    this['@class'] = '.Shape';
-
-    (<any>Object).assign(this, <any>props);
-  }
-}
-
-export abstract class Label extends Node {
-  public bounds: dc.Bounds;
-
-  public constructor(props?: Label) {
-    super();
-
-    this['@class'] = '.Label';
-
-    (<any>Object).assign(this, <any>props);
-  }
-}
-
-export abstract class Plane extends Node {
-  public diagramElement?: DiagramElement[];
-
-  public constructor(props?: Plane) {
-    super();
-
-    this['@class'] = '.Plane';
-
-    (<any>Object).assign(this, <any>props);
-  }
+export interface Style {
+  id: string;
 }
